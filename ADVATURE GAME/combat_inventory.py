@@ -152,7 +152,3 @@ def print_item_effect(inventory: dict, item: str) -> None:
            | PRESS ENTER TO GO BACK |
 ==============================================
 """)
-
-
-if __name__ == '__main__':
-    pass

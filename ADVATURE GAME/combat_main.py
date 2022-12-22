@@ -5,7 +5,7 @@ import random
 # * COMBAT SYSTEM
 from combat_inventory import inventory_main_menu
 from player_showoff import show_avatar_and_stats
-from cave_menu import combat_cave_menu
+from cave_menu import cave_menu
 
 # * FUNKTIONER
 from Menu_user_checker import menu_answer_checker
@@ -82,7 +82,7 @@ TYPE: """)
             match userawnser:
                 case "cave":
 
-                    combat_cave_menu()
+                    cave_menu(player)
                     turn += 1
 
                 case "show":
@@ -140,14 +140,14 @@ def player_creater() -> Player:
 
         # ? USER TYPES IN THERE NAME FOR THERE CHARACTER
         if option == "Name":
-            while not(name_awnser.isalpha()):  # Makes sure that its only lether anwser goes throw
+            while not name_awnser.isalpha():  # Makes sure that its only lether anwser goes throw
                 name_awnser = input(
                     "Please enter your name character [only lethers]: ")
                 base_blueproff_stats["Name"] = name_awnser
 
         # ? USER TYPES IN THERE AWNSERS TO THE STRING RELATED QUESTION
         elif option in STR_OPTOPN:
-            while not(str_awnser.isalpha()):
+            while not str_awnser.isalpha():
                 str_awnser = input(
                     f"What {option} does your character have [only lethers] ? ")
                 base_blueproff_avatar[option] = str_awnser
@@ -156,7 +156,7 @@ def player_creater() -> Player:
 
         elif option in INT_OPTOPN:
 
-            while not(int_awnser.isnumeric()):
+            while not int_awnser.isnumeric():
                 int_awnser = input(
                     f"What {option} does your character have[only numbers] ? ")
             base_blueproff_avatar[option] = int(int_awnser)

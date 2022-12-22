@@ -7,6 +7,7 @@ from rich.traceback import install
 from How_To_play_menu import how_to_play_main_menu
 from combat_main import sure_to_play
 
+# Menu utilitys
 from terminal_fixes import clearterminal
 from Menu_user_checker import menu_answer_checker
 

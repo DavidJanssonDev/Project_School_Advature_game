@@ -13,15 +13,24 @@ class Player:
     """
 
     def __init__(self, player_stats: dict, player_looks: dict) -> None:
+        self.turn: int = 0
+
         self.player_looks = player_looks  # Alla karatiskiska saker som en användare har
         self.name = player_stats.get("Name")
-        self.level = player_stats.get("Level")
-        self.armor = player_stats.get("Armor")
-        self.damage = player_stats.get("Damage")
-        self.health = player_stats.get("Health")
-        self.life = player_stats.get("Life")
-        self.inventory = {"Item 1": None, "Item 2": None,
-                          "Item 3": None, "Item 4": None, "Item 5": None}
+        self.level: int = player_stats.get("Level")
+        self.armor: int = player_stats.get("Armor")
+        self.damage: int = player_stats.get("Damage")
+        self.health: int = player_stats.get("Health")
+        self.life: int = player_stats.get("Life")
+        self.inventory: dict = {
+
+            "Item 1": None,
+            "Item 2": None,
+            "Item 3": None,
+            "Item 4": None,
+            "Item 5": None
+
+        }
 
     def print_player_stats(self):
         """
@@ -68,25 +77,40 @@ class Monster:
 
     """
 
-    def __init__(self, monster_stats_tier: int) -> None:
-        self.monster_stats_tier = monster_stats_tier
+    def __init__(self, moster_level: int) -> None:
+        self.moster_level = moster_level
 
-        if monster_stats_tier == 1:
-            self.name = "Bob"
-            self.health = 10
-            self.damage = 5
-            self.armor = 0
-            self.speed = random.randint(0, 15)
-        if monster_stats_tier == 2:
-            self.name = "Bob 2.0"
-            self.health = 25
-            self.damage = 7
-            self.armor = 2
-            self.speed = random.randint(10, 20)
+        match moster_level:
+            case 1:
+                self.name: str = "Bob"
+                self.health: int = 10
+                self.damage: int = random.randint(1, 10)
+                self.armor: int = 0
+            case 2:
+                self.name: str = "Bob 2.0"
+                self.health: int = 25
+                self.damage: int = random.randint(1, 15)
+                self.armor: int = random.randint(1, 3)
+            case 3:
+                pass
+            case 4:
+                pass
+            case 5:
+                pass
+            case 6:
+                pass
+            case 7:
+                pass
+            case 8:
+                pass
+            case 9:
+                pass
+            case 10:
+                pass
 
 
 # ============================================================================
-#                               CHEST
+#                               MONSTER
 # ============================================================================
 
 def luck_calculation() -> list[float]:
@@ -133,8 +157,8 @@ class Item(object):
     Effected:
 
         Damage Multiplier : {self.damage_boost}
-        Max Health Boost  : {self.damage_boost} %
-        Armor Boost       : {self.damage_boost} %
+        Max Health Boost  : {self.health_boost} %
+        Armor Boost       : {self.armor_boost} %
     """
 
     def genatate_stat(self):
@@ -160,10 +184,41 @@ class Item(object):
 
         user_luck = random.random()
 
+        disctance_between_user_and_damage_luck = abs(
+            user_luck-damage_boost_luck)
+        disctance_between_user_and_heath_luck = abs(
+            user_luck-health_boost_luck)
+        disctance_between_user_and_armor_luck = abs(
+            user_luck-armor_boost_luck)
+
         for _ in range(number_of_stats):
-            if 0 < user_luck <= damage_boost_luck:
+            if disctance_between_user_and_damage_luck > disctance_between_user_and_heath_luck and disctance_between_user_and_damage_luck > disctance_between_user_and_armor_luck:
+                print("damage")
                 self.damage_boost += effect
-            elif damage_boost_luck < user_luck <= health_boost_luck:
+            elif disctance_between_user_and_heath_luck > disctance_between_user_and_damage_luck and disctance_between_user_and_heath_luck > disctance_between_user_and_armor_luck:
+                print("health")
                 self.health_boost += effect
-            elif health_boost_luck < user_luck <= armor_boost_luck:
-                self.health_boost += effect
+            elif disctance_between_user_and_armor_luck > disctance_between_user_and_damage_luck and disctance_between_user_and_armor_luck > disctance_between_user_and_heath_luck:
+                print("armor")
+                self.armor_boost += effect
+
+            damage_boost_luck = luck_calculation()[0]
+            health_boost_luck = luck_calculation()[1]
+            armor_boost_luck = luck_calculation()[2]
+
+            user_luck = random.random()
+
+            disctance_between_user_and_damage_luck = abs(
+                user_luck-damage_boost_luck)
+            disctance_between_user_and_heath_luck = abs(
+                user_luck-health_boost_luck)
+            disctance_between_user_and_armor_luck = abs(
+                user_luck-armor_boost_luck)
+
+
+if __name__ == "__main__":
+    item1 = Item("epic", "hi")
+
+    item1.genatate_stat()
+
+    print(item1)

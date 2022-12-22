@@ -1,10 +1,11 @@
-
+# Imports
 import random
+from cave_fight import combat_fighting_menu
 from Game_classes import Player, Item
 from terminal_fixes import clearterminal
 
 
-def combat_cave_menu() -> None:
+def cave_menu(player: Player) -> None:
     """
 
     CAVE HUVUD MENU
@@ -33,11 +34,9 @@ TYPE: Cave """)
                     combat_cave_nothing_menu()
                     return
                 case 'monster':
-                    print('Monster was here')
-                    input('')
+                    combat_fighting_menu(player, player.turn)
                 case 'chest':
-                    print('Chest was here')
-                    input('')
+                    combat_cave_chest_menu(player.inventory)
                 case 'trap':
                     print('Trap was here')
                     input('')
@@ -88,7 +87,7 @@ def combat_cave_nothing_menu() -> None:
 #       CAVE MENU 2
 # ===========================
 
-def combat_cave_chest_menu() -> None:
+def combat_cave_chest_menu(player_inventory: dict) -> None:
     """
     Menu where the user get a item
     """
@@ -100,7 +99,7 @@ def combat_cave_chest_menu() -> None:
                   'Rod of Malice', 'Slab of Bane',
                   ]
 
-    random_rarity_of_weapons = random.choice(['common', 'epic', 'legendary'])
+    random_rarity_of_weapons = random.choice(['rare', 'epic', 'legendary'])
     random_name_of_weapons = random.choice(item_names)
 
     chest_item = Item(random_rarity_of_weapons.lower(),

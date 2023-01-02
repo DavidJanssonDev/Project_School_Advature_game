@@ -23,8 +23,6 @@ for runda in range(antal):
     longest_05 = disctance_randnum_num2 > disctance_randnum_num1 and disctance_randnum_num2 > disctance_randnum_num3
     longest_1 = disctance_randnum_num3 > disctance_randnum_num1 and disctance_randnum_num3 > disctance_randnum_num2
 
-    dwa = ab
-
     # print(longest_0)
     # print(longest_05)
     # print(longest_1)

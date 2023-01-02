@@ -152,3 +152,17 @@ def print_item_effect(inventory: dict, item: str) -> None:
            | PRESS ENTER TO GO BACK |
 ==============================================
 """)
+
+
+def item_place_empty_or_taken(inventory: dict) -> None:
+    """
+    Prints ut vilka av de itemslotsen som är tillgängliga 
+
+    Args:
+        inventory (dict): Användarens inventory
+    """
+    for item in inventory.items():
+        if item is None:
+            print("▢", end="")
+        else:
+            print("▣", end="")

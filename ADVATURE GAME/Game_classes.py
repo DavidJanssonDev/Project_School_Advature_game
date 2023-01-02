@@ -15,13 +15,16 @@ class Player:
     def __init__(self, player_stats: dict, player_looks: dict) -> None:
         self.turn: int = 0
 
-        self.player_looks = player_looks  # Alla karatiskiska saker som en användare har
+        # Alla karatiskiska saker som en användare har
+        self.player_looks: dict = player_looks
         self.name = player_stats.get("Name")
-        self.level: int = player_stats.get("Level")
-        self.armor: int = player_stats.get("Armor")
-        self.damage: int = player_stats.get("Damage")
-        self.health: int = player_stats.get("Health")
-        self.life: int = player_stats.get("Life")
+        self.level = player_stats.get("Level")
+        self.armor = player_stats.get("Armor")
+        self.damage = player_stats.get("Damage")
+        self.health = player_stats.get("Health")
+        self.life = player_stats.get("Life")
+        self.deeffects: list = []
+
         self.inventory: dict = {
 
             "Item 1": None,

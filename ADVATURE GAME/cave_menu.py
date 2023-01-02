@@ -1,5 +1,6 @@
 # Imports
 import random
+from combat_inventory import item_place_empty_or_taken, dictunary_to_list
 from cave_fight import combat_fighting_menu
 from Game_classes import Player, Item
 from terminal_fixes import clearterminal
@@ -107,12 +108,13 @@ def combat_cave_chest_menu(player_inventory: dict) -> None:
 
     chest_item.genatate_stat()
 
-    menu_options = ['1', '2', '3']
+    menu_options = dictunary_to_list(player_inventory)
+
     while True:
         userawnser: str = ''
         while userawnser not in menu_options:
             clearterminal()
-            userawnser = input(f"""
+            print(f"""
 ==============================================
                   CHEST MENU
 ==============================================
@@ -121,14 +123,37 @@ YOU FOUND A {random_rarity_of_weapons} ITEM
 
     ITEM: {random_name_of_weapons}
 
-    STATS: {chest_item}
+    STATS: {chest_item}""")
 
- 
+            item_place_empty_or_taken(player_inventory)
 
+            userawnser = input("""
 ==============================================
 Wich of the slots do you want to place it in ?
+                    OR
+     Do you want to leave it and move on
 ==============================================
-TYPE: Slot [number]  """)
+TYPE: Slot [number] or Leave it [leave]  """)
+
+            if userawnser.lower() == "leave":
+                return
+
+            match userawnser:
+
+                case "1":
+                    player_inventory["item 1"] = chest_item
+                case "2":
+                    player_inventory["item 1"] = chest_item
+                case "3":
+                    player_inventory["item 1"] = chest_item
+                case "4":
+                    player_inventory["item 1"] = chest_item
+                case "5":
+                    player_inventory["item 1"] = chest_item
+
+# ===========================
+#       CAVE MENU 3
+# ===========================
 
 
 # ===========================

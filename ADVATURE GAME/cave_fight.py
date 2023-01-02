@@ -1,42 +1,29 @@
-from Game_classes import Player, Monster
+
+from Game_classes import Monster
+from Game_classes import Player
 from terminal_fixes import clearterminal
 
 
-def combat_fighting_menu(player: Player, turn: int):
+def damage_calculation(player_damage: int, player_inventory: dict, player_deeffects: list) -> int:
+
+    return 1
+
+
+def combat_fighting_menu(player: Player, monster: Monster, turn: int):
     """
     Player fighting monster Menu:
     """
-    p_name: str = player.name
-    p_hp: int = player.health
+    p_name = player.name
+    p_hp = player.health
     p_dmg: int = player.damage
-    p_lvl: int = player.level
-    p_items: dict = player.inventory
-    p_armor: int = player.armor
+    p_lvl = player.level
+    p_items = player.inventory
+    p_armor = player.armor
+    p_deeffects = player.deeffects
+    p_trueDamage = damage_calculation(p_dmg, p_items, p_deeffects)
 
-    match turn:
-        case 1:
-            monster = Monster(1)
-        case 2:
-            monster = Monster(2)
-        case 3:
-            monster = Monster(3)
-        case 4:
-            monster = Monster(4)
-        case 5:
-            monster = Monster(5)
-        case 6:
-            monster = Monster(6)
-        case 7:
-            monster = Monster(7)
-        case 8:
-            monster = Monster(8)
-        case 9:
-            monster = Monster(9)
-        case 10:
-            monster = Monster(10)
-
-    m_name: str = monster.name
-    m_hp: int = monster.health
-    m_dmg: int = monster.damage
-    m_armor: int = monster.armor
-    m_tier: int = monster.moster_level
+    m_name = monster.name
+    m_hp = monster.health
+    m_dmg = monster.damage
+    m_armor = monster.armor
+    m_tier = monster.moster_level

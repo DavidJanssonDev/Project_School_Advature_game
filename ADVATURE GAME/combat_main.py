@@ -108,7 +108,7 @@ def player_creater() -> Player:
     Returns:
         _type_: _description_
     """
-    base_blueproff_stats = {
+    base_blueprint_stats = {
         "Name": str,
         "Life": 3,
         "Health": 10,
@@ -118,7 +118,7 @@ def player_creater() -> Player:
         "Damage": random.randint(5, 10),
     }
 
-    base_blueproff_avatar = {
+    base_blueprint_avatar = {
         "Skin color": str,
         "Hair color": str,
         "Body shape": str,
@@ -143,14 +143,14 @@ def player_creater() -> Player:
             while not name_awnser.isalpha():  # Makes sure that its only lether anwser goes throw
                 name_awnser = input(
                     "Please enter your name character [only lethers]: ")
-                base_blueproff_stats["Name"] = name_awnser
+                base_blueprint_stats["Name"] = name_awnser
 
         # ? USER TYPES IN THERE AWNSERS TO THE STRING RELATED QUESTION
         elif option in STR_OPTOPN:
             while not str_awnser.isalpha():
                 str_awnser = input(
                     f"What {option} does your character have [only lethers] ? ")
-                base_blueproff_avatar[option] = str_awnser
+                base_blueprint_avatar[option] = str_awnser
 
         # ? USER TYPES IN THERE AWNSERS TO THE INTERGER RELATED QUESTION
 
@@ -159,8 +159,8 @@ def player_creater() -> Player:
             while not int_awnser.isnumeric():
                 int_awnser = input(
                     f"What {option} does your character have[only numbers] ? ")
-            base_blueproff_avatar[option] = int(int_awnser)
-    return Player(base_blueproff_stats, base_blueproff_avatar)
+            base_blueprint_avatar[option] = int(int_awnser)
+    return Player(base_blueprint_stats, base_blueprint_avatar)
 
 
 if __name__ == "__main__":

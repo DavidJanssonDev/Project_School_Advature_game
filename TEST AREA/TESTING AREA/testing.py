@@ -77,17 +77,21 @@ def player_creater():
         'Height': '0',
         'Weight': '0'
     }
-    print(base_blueprint_avatar.items())
+
     for (key, value) in list(base_blueprint_avatar.items()):
+        print(key)
+        print(value)
+        user_awnser = input(
+            f'What {key} does your character have [TYPE ONLY LETTHERS] ? ')
 
         if isinstance(value, str):
-            while not user_awnser.isalpha():
-                user_awnser = input(
-                    f'What {key} does your character have [TYPE ONLY LETTHERS] ? ')
-        else:
-            while not user_awnser.isnumeric():
-                user_awnser = input(
-                    f'What {key} does your character have [TYPE ONLY NUMBERS] ? ')
+            #         while not user_awnser.isalpha():
+            #             user_awnser = input(
+            #                 f'What {key} does your character have [TYPE ONLY LETTHERS] ? ')
+            #     else:
+            #         while not user_awnser.isnumeric():
+            #             user_awnser = input(
+            #                 f'What {key} does your character have [TYPE ONLY NUMBERS] ? ')
 
         base_blueprint_avatar[key] = str(user_awnser)
     print(list(base_blueprint_avatar.items()))

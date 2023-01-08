@@ -9,31 +9,33 @@ from tabulate import tabulate
 
 class Player:
     """
-    THE USER PLAYER
+    ANVÄNDAREN
     """
 
-    def __init__(self, player_stats: dict, player_looks: dict) -> None:
-        self.turn: int = 0
+    def __init__(self, player_avatar: list[tuple[str, str]]) -> None:
 
-        # Alla karatiskiska saker som en användare har
-        self.player_looks: dict = player_looks
-        self.name = player_stats.get("Name")
-        self.level = player_stats.get("Level")
-        self.armor = player_stats.get("Armor")
-        self.damage = player_stats.get("Damage")
-        self.health = player_stats.get("Health")
-        self.life = player_stats.get("Life")
-        self.deeffects: list = []
-
-        self.inventory: dict = {
-
-            "Item 1": None,
-            "Item 2": None,
-            "Item 3": None,
-            "Item 4": None,
-            "Item 5": None
-
+        # Player Status
+        self.name: str = player_avatar[0][1]
+        self.player_lift: int = 3
+        self.player_hp: int = 10
+        self.player_damage: int = random.randint(5, 10)
+        self.player_lvl: int = 1
+        self.player_armor: str = random.choice(['Heavyarmor', 'Lightarmor'])
+        self.player_inventory: dict = {
+            'item 1': None,
+            'item 2': None,
+            'item 3': None,
+            'item 4': None,
+            'item 5': None,
         }
+
+        # Player Looks
+        self.skin_color: str = player_avatar[1][1]
+        self.hair_color: str = player_avatar[2][1]
+        self.body_shape: str = player_avatar[3][1]
+        self.eye_color: str = player_avatar[4][1]
+        self.height: str = player_avatar[5][1]
+        self.weight: str = player_avatar[6][1]
 
     def print_player_stats(self):
         """
@@ -42,11 +44,11 @@ class Player:
         table_stats_data = [
             ["Player Stats", ""],
             ["Name", self.name],
-            ["Life", self.life],
-            ["Level", self.level],
-            ["Health", self.health],
-            ["Damage", self.damage],
-            ["Armor", self.armor]
+            ["Life", self.player_lift],
+            ["Level", self.player_lvl],
+            ["Health", self.player_hp],
+            ["Damage", self.player_damage],
+            ["Armor", self.player_armor]
         ]
     # FUNCTION FOR PRINTING OUT THE PLAYER STATS
         print(tabulate(table_stats_data, headers="firstrow", tablefmt="psql"))
@@ -58,15 +60,16 @@ class Player:
 
         table_stats_avatar = [
             ["Avatar", ""],
-            ["Skin color", self.player_looks.get("Skin color")],
-            ["Hair color", self.player_looks.get("Hair color")],
-            ["Body shape", self.player_looks.get("Body shape")],
-            ["Eye color", self.player_looks.get("Eye color")],
-            ["Height", self.player_looks.get("Height")],
-            ["Weight", self.player_looks.get("Weight")],
+            ["Skin color", self.skin_color],
+            ["Hair color", self.hair_color],
+            ["Body shape", self.body_shape],
+            ["Eye color", self.eye_color],
+            ["Height", self.height],
+            ["Weight", self.weight],
         ]
     # FUNCTION FOR PRINTING OUT THE PLAYER LOOKS
         print(tabulate(table_stats_avatar, headers="firstrow", tablefmt="psql"))
+
 
 # ============================================================================
 #                               MONSTER
@@ -127,8 +130,7 @@ def luck_calculation() -> list[float]:
     damage_boost_luck = random.random()
     armor_boost_luck = random.random()
     health_boost_luck = random.random()
-    lista_num = [damage_boost_luck, health_boost_luck, armor_boost_luck]
-    summa = sum(lista_num)
+    summa = sum([damage_boost_luck, health_boost_luck, armor_boost_luck])
 
     damage_boost_luck = damage_boost_luck / summa
     health_boost_luck = health_boost_luck / summa

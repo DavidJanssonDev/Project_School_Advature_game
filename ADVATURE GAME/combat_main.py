@@ -1,7 +1,5 @@
 
 
-import random
-
 # * COMBAT SYSTEM
 from combat_inventory import inventory_main_menu
 from player_showoff import show_avatar_and_stats
@@ -89,7 +87,7 @@ TYPE: """)
                     show_avatar_and_stats(player)
 
                 case "inventory":
-                    inventory_main_menu(player.inventory)
+                    inventory_main_menu(player.player_inventory)
 
                 case "quit":
                     are_you_sure = input(
@@ -101,69 +99,39 @@ TYPE: """)
                             continue
 
 
-def player_creater() -> Player:
+def player_creater():
     """
     CREATING THE USER PLAYER
 
     Returns:
-        _type_: _description_
+        Player: USER PLAYER object
     """
-    base_blueprint_stats = {
-        "Name": str,
-        "Life": 3,
-        "Health": 10,
-        "Level": 1,
-        "Armor": random.choice(["Heavyarmor", "Lightarmor"]),
-        "Speed": random.randint(0, 10),
-        "Damage": random.randint(5, 10),
-    }
 
     base_blueprint_avatar = {
-        "Skin color": str,
-        "Hair color": str,
-        "Body shape": str,
-        "Eye color": str,
-        "Height": int,
-        "Weight": int
+        'user name': '',
+        'skin color': '',
+        'hair color': '',
+        'body shape': '',
+        'eye color': '',
+        'height': 0,
+        'weight': 0
     }
+    print(f'\n\n{list(base_blueprint_avatar.items())} \n\n')
 
-    USER_OPTIONS = [
-        "Name", "Skin color", "Hair color", "Body shape", "Eye color", "Height", "Weight"]
-    INT_OPTOPN = ["Height", "Weight"]
-    STR_OPTOPN = ["Skin color", "Hair color", "Body shape", "Eye color"]
+    for (key, value) in list(base_blueprint_avatar.items()):
+        user_awnser: str = ""
 
-    for option in USER_OPTIONS:
-        name_awnser: str = ""
-        str_awnser: str = ""
-        int_awnser: str = ""
-        clearterminal()
+        # CHECKING IF THE VALUE IS NOT THE RIGHT ONE TO THE COROSPORENT TYPE
+        if isinstance(value, str):
+            while not user_awnser.isalpha():
+                user_awnser = input(
+                    f'What {key} does your character have [TYPE ONLY LETTHERS] ? ')
+        else:
+            while not user_awnser.isnumeric():
+                user_awnser = input(
+                    f'What {key} does your character have [TYPE ONLY NUMBERS] ? ')
+        # ADDING IT TO THE DICTIONARY
 
-        # ? USER TYPES IN THERE NAME FOR THERE CHARACTER
-        if option == "Name":
-            while not name_awnser.isalpha():  # Makes sure that its only lether anwser goes throw
-                name_awnser = input(
-                    "Please enter your name character [only lethers]: ")
-                base_blueprint_stats["Name"] = name_awnser
+        base_blueprint_avatar[key] = user_awnser
 
-        # ? USER TYPES IN THERE AWNSERS TO THE STRING RELATED QUESTION
-        elif option in STR_OPTOPN:
-            while not str_awnser.isalpha():
-                str_awnser = input(
-                    f"What {option} does your character have [only lethers] ? ")
-                base_blueprint_avatar[option] = str_awnser
-
-        # ? USER TYPES IN THERE AWNSERS TO THE INTERGER RELATED QUESTION
-
-        elif option in INT_OPTOPN:
-
-            while not int_awnser.isnumeric():
-                int_awnser = input(
-                    f"What {option} does your character have[only numbers] ? ")
-            base_blueprint_avatar[option] = int(int_awnser)
-    return Player(base_blueprint_stats, base_blueprint_avatar)
-
-
-if __name__ == "__main__":
-    ewa = player_creater()
-    ewa.print_player_avatar()
-    ewa.print_player_stats()
+    return Player(list(base_blueprint_avatar.items()))

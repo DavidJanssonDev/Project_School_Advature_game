@@ -64,39 +64,42 @@ def player_creater():
     CREATING THE USER PLAYER
 
     Returns:
-        lsit: player looks
+        Player: USER PLAYER object
     """
-    user_awnser: str = ''
 
     base_blueprint_avatar = {
-        'User name': '',
-        'Skin color': '',
-        'Hair color': '',
-        'Body shape': '',
-        'Eye color': '',
-        'Height': '0',
-        'Weight': '0'
+        'user name': '',
+        'skin color': '',
+        'hair color': '',
+        'body shape': '',
+        'eye color': '',
+        'height': 0,
+        'weight': 0
     }
+    print(f'\n\n{list(base_blueprint_avatar.items())} \n\n')
 
     for (key, value) in list(base_blueprint_avatar.items()):
-        print(key)
-        print(value)
-        user_awnser = input(
-            f'What {key} does your character have [TYPE ONLY LETTHERS] ? ')
+        user_awnser: str = ""
+        print(f'\n\n{key}: {isinstance(value, str)}', end='\n\n')
 
+        # CHECKING IF THE VALUE IS NOT THE RIGHT ONE TO THE COROSPORENT TYPE
         if isinstance(value, str):
-            #         while not user_awnser.isalpha():
-            #             user_awnser = input(
-            #                 f'What {key} does your character have [TYPE ONLY LETTHERS] ? ')
-            #     else:
-            #         while not user_awnser.isnumeric():
-            #             user_awnser = input(
-            #                 f'What {key} does your character have [TYPE ONLY NUMBERS] ? ')
+            while not user_awnser.isalpha():
+                user_awnser = input(
+                    f'What {key} does your character have [TYPE ONLY LETTHERS] ? ')
 
-        base_blueprint_avatar[key] = str(user_awnser)
-    print(list(base_blueprint_avatar.items()))
+        else:
+            while not user_awnser.isnumeric():
+                user_awnser = input(
+                    f'What {key} does your character have [TYPE ONLY NUMBERS] ? ')
+        # ADDING IT TO THE DICTIONARY
+
+        base_blueprint_avatar[key] = user_awnser
+
+    return Player(list(base_blueprint_avatar.items()))
 
 
 if __name__ == '__main__':
-    player_creater()
-    input()
+    player_1 = player_creater()
+    player_1.print_player_avatar()
+    player_1.print_player_stats()

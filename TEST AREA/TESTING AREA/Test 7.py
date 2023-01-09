@@ -1,14 +1,9 @@
+from rich.traceback import install
+
+install
 
 
-from time import sleep
-from rich.progress import track
-
-from terminal_fixes import clearterminal
-
-ERROR_TID = 10  # Tiden som det tar för att anvädaren ska vänta
-
-
-def menu_answer_checker(user_awnser: str, menu_op: list[str]) -> str:
+def menu_check(user_awnser: str, menu_op: list[str]) -> str:
     """
     Parameter:
         menu_op: list of menu options
@@ -35,9 +30,7 @@ def menu_answer_checker(user_awnser: str, menu_op: list[str]) -> str:
             for index, ture_or_false in enumerate(user_awnser_str_error):
                 if ture_or_false:
                     return menu_op[index]
-
-            menu_error('Invaled menu option')
-            return ''
+            # return 'you got a error [str]'
 
         #! CHECKING INT ERROR
         user_awnser_int = int(user_awnser) - 1
@@ -51,22 +44,6 @@ def menu_answer_checker(user_awnser: str, menu_op: list[str]) -> str:
         for index, ture_or_false in enumerate(user_awnser_int_error):
             if ture_or_false:
                 return menu_op[index]
+        # return 'you got a error [int]'
 
-        menu_error('Invaled number')
-        return ''
-
-    menu_error('No symbols')
-    return ''
-
-
-def menu_error(type_of_message: str) -> None:
-    """
-    MENU ERROR
-    """
-
-    clearterminal()
-    print(
-        f'Wait {ERROR_TID} secondes, before typeing a new awnser. Wrong type messege: {type_of_message}')
-    for step in track(range(ERROR_TID)):
-        sleep(1)
-    clearterminal()
+    # return 'you got a error [annat]'

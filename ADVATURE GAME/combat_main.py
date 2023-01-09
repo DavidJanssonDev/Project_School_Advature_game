@@ -23,6 +23,7 @@ def sure_to_play():
     game_is_runing = True
     clearterminal()
     while game_is_runing:
+        clearterminal()
         userawnser = ""
         while userawnser not in menu_options:
             userawnser = input("""

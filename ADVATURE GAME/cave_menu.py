@@ -37,7 +37,7 @@ TYPE: Cave """)
                 case 'monster':
                     combat_fighting_menu(player, player.turn)
                 case 'chest':
-                    combat_cave_chest_menu(player.inventory)
+                    combat_cave_chest_menu(player.player_inventory)
                 case 'trap':
                     print('Trap was here')
                     input('')
@@ -135,10 +135,7 @@ Wich of the slots do you want to place it in ?
 ==============================================
 TYPE: Slot [number] or Leave it [leave]  """)
 
-            if userawnser.lower() == "leave":
-                return
-
-            match userawnser:
+            match userawnser.lower():
 
                 case "1":
                     player_inventory["item 1"] = chest_item
@@ -150,7 +147,8 @@ TYPE: Slot [number] or Leave it [leave]  """)
                     player_inventory["item 1"] = chest_item
                 case "5":
                     player_inventory["item 1"] = chest_item
-
+                case 'leave':
+                    return
 # ===========================
 #       CAVE MENU 3
 # ===========================

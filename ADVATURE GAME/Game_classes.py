@@ -20,7 +20,7 @@ class Player:
         self.player_hp: int = 10
         self.player_damage: int = random.randint(5, 10)
         self.player_lvl: int = 1
-        self.player_armor: str = random.choice(['Heavyarmor', 'Lightarmor'])
+        self.player_armor: int = random.randint(1, 3)
         self.player_inventory: dict = {
             'item 1': None,
             'item 2': None,
@@ -189,36 +189,23 @@ class Item(object):
 
         user_luck = random.random()
 
-        disctance_between_user_and_damage_luck = abs(
+        d_user_damage_luck = abs(
             user_luck-damage_boost_luck)
-        disctance_between_user_and_heath_luck = abs(
+        d_user_health_luck = abs(
             user_luck-health_boost_luck)
-        disctance_between_user_and_armor_luck = abs(
+        d_user_armor_luck = abs(
             user_luck-armor_boost_luck)
 
         for _ in range(number_of_stats):
-            if disctance_between_user_and_damage_luck > disctance_between_user_and_heath_luck and disctance_between_user_and_damage_luck > disctance_between_user_and_armor_luck:
+            if d_user_damage_luck > d_user_health_luck and d_user_damage_luck > d_user_armor_luck:
                 print("damage")
                 self.damage_boost += effect
-            elif disctance_between_user_and_heath_luck > disctance_between_user_and_damage_luck and disctance_between_user_and_heath_luck > disctance_between_user_and_armor_luck:
+            elif d_user_health_luck > d_user_damage_luck and d_user_health_luck > d_user_armor_luck:
                 print("health")
                 self.health_boost += effect
-            elif disctance_between_user_and_armor_luck > disctance_between_user_and_damage_luck and disctance_between_user_and_armor_luck > disctance_between_user_and_heath_luck:
+            elif d_user_armor_luck > d_user_damage_luck and d_user_armor_luck > d_user_health_luck:
                 print("armor")
                 self.armor_boost += effect
-
-            damage_boost_luck = luck_calculation()[0]
-            health_boost_luck = luck_calculation()[1]
-            armor_boost_luck = luck_calculation()[2]
-
-            user_luck = random.random()
-
-            disctance_between_user_and_damage_luck = abs(
-                user_luck-damage_boost_luck)
-            disctance_between_user_and_heath_luck = abs(
-                user_luck-health_boost_luck)
-            disctance_between_user_and_armor_luck = abs(
-                user_luck-armor_boost_luck)
 
 
 if __name__ == "__main__":

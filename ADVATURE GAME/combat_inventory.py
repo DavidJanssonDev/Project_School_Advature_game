@@ -35,7 +35,7 @@ def inventory_main_menu(inventory: dict) -> None:
                 INVENTORY MENU
 ==============================================
 """)
-
+            print_out_inventory(inventory)
             userawnser = input("""
 ==============================================
     1. INSPECT ONE ITEM | TYPE: inspect     /1

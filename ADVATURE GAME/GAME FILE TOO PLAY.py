@@ -27,8 +27,8 @@ def main():
     menu_options = ["game", "how", "quit"]
     game_running: bool = True
     while game_running:
+        userawnser: str = ""
 
-        userawnser = ""
         while userawnser not in menu_options:
             clearterminal()
             userawnser = input("""

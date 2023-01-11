@@ -137,7 +137,6 @@ def get_items_from_inventory(inventory: dict) -> list[Item]:
         if isinstance(item, Item):
             inventory_items.append(item)
             continue
-        pass
     return inventory_items
 
 

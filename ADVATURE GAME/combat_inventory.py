@@ -105,19 +105,19 @@ def inventory_inspect(inventory: dict) -> None:
 Type:""")
             match user_awnser:
                 case'1':
-                    print_item_effect(inventory, 'Item 1')
+                    print_item_effect(inventory, 'item 1')
                     clearterminal()
                 case'2':
-                    print_item_effect(inventory, 'Item 2')
+                    print_item_effect(inventory, 'item 2')
                     clearterminal()
                 case'3':
-                    print_item_effect(inventory, 'Item 3')
+                    print_item_effect(inventory, 'item 3')
                     clearterminal()
                 case'4':
-                    print_item_effect(inventory, 'Item 4')
+                    print_item_effect(inventory, 'item 4')
                     clearterminal()
                 case'5':
-                    print_item_effect(inventory, 'Item 5')
+                    print_item_effect(inventory, 'item 5')
                     clearterminal()
                 case'back':
                     return
@@ -139,6 +139,7 @@ def print_item_effect(inventory: dict, item: str) -> None:
     else:
         item_effect = None
         item_name = None
+
     clearterminal()
     print(f"""
 ==============================================

@@ -1,3 +1,4 @@
+
 dictunary = {
     "One": 1,
     "Two": 2,
@@ -5,4 +6,4 @@ dictunary = {
     "Four": 4
 }
 
-print(dictunary.get("One"))
+print(list(dictunary.items()))

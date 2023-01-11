@@ -35,7 +35,7 @@ TYPE: Cave """)
                     combat_cave_nothing_menu()
                     return
                 case 'monster':
-                    combat_fighting_menu(player, player.turn)
+                    combat_fighting_menu(player)
                 case 'chest':
                     combat_cave_chest_menu(player.player_inventory)
                 case 'trap':

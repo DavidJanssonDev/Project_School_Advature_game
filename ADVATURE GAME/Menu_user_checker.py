@@ -13,10 +13,11 @@ def menu_answer_checker(user_awnser: str, menu_op: list[str]) -> str:
     Parameter:
         menu_op: list of menu options
 
-        user_awnser: the string of the user awnser  
+        user_awnser: the string of the user awnser
 
     Return:
 
+        user_checked_awnser (str)
     """
     user_awnser_int: int
     user_awnser_int_error: list[bool] = []
@@ -28,7 +29,7 @@ def menu_answer_checker(user_awnser: str, menu_op: list[str]) -> str:
         #! CHECKING STR ERROR
         if user_awnser.isalpha():
             for option in menu_op:
-                if user_awnser.lower() != option:
+                if user_awnser.lower() != option.lower():
                     user_awnser_str_error.append(False)
                 else:
                     user_awnser_str_error.append(True)

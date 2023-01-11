@@ -1,6 +1,6 @@
 
-import random
 from tabulate import tabulate
+import random
 
 # ============================================================================
 #                              PLAYER
@@ -15,12 +15,13 @@ class Player:
     def __init__(self, player_avatar: list[tuple[str, str]]) -> None:
 
         # Player Status
-        self.name: str = player_avatar[0][1]
+        self.name: str = player_avatar[0][1].title()
         self.player_lift: int = 3
         self.player_hp: int = 10
         self.player_damage: int = random.randint(5, 10)
         self.player_lvl: int = 1
         self.player_armor: int = random.randint(1, 3)
+        self.player_debuff: list[int] = []
         self.player_inventory: dict = {
             'item 1': None,
             'item 2': None,
@@ -178,10 +179,10 @@ class Item(object):
                 effect = random.randrange(0, 10)
             case "epic":
                 number_of_stats = 2
-                effect = random.randrange(0, 10)
+                effect = random.randrange(1, 15)
             case "legendary":
                 number_of_stats = 3
-                effect = random.randrange(0, 10)
+                effect = random.randrange(5, 15)
 
         damage_boost_luck = luck_calculation()[0]
         health_boost_luck = luck_calculation()[1]

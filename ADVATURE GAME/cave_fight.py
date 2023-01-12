@@ -2,6 +2,7 @@
 from Game_classes import Monster
 from Game_classes import Player
 from Game_classes import Item
+from math import floor
 from terminal_fixes import clearterminal
 
 
@@ -25,7 +26,7 @@ def get_items_from_inventory(inventory: dict) -> list[Item]:
     return items
 
 
-def items_to_buffs(inventory: list[Item]) -> tuple[int, int, int]:
+def items_to_buffs(inventory: list[Item]) -> list[int]:
     """
     Takes every item from the players items and combinds the items same type of buffs togheter
 
@@ -44,25 +45,41 @@ def items_to_buffs(inventory: list[Item]) -> tuple[int, int, int]:
         dmg_buff += item.damage_boost
         armor_buff += item.armor_boost
 
-    return (hp_buff, dmg_buff, armor_buff)
+    return [hp_buff, dmg_buff, armor_buff]
 
 
-def damage_calculation(p_damage: int, p_inventory: list[Item], p_debuffs: list[int], monster_buffs: int) -> int:
+def debuffs_to_int(debuffs: dict[str, int]) -> list[int]:
+    p_debuff_dmg: int = 0
+    p_debuff_hp: int = 0
+    p_debuff_armor: int = 0
+    for (name_of_buff, buff) in enumerate(list(debuffs.items())):
+        if name_of_buff == 'damage':
+            p_debuff_dmg += buff[1]
+        elif name_of_buff == 'health':
+            p_debuff_hp += buff[1]
+        elif name_of_buff == 'armor':
+            p_debuff_armor += buff[1]
+    return [p_debuff_hp, p_debuff_dmg, p_debuff_armor]
+
+
+def damage_calculation(p_dmg: int, p_in: list[Item], p_debuffs: dict[str, int], m_armor: int) -> int:
     """
 
     Calculate all of the damage a player does
 
     Args:
-        player_damage (int): what base damage the player has
-        player_inventory (dict): what inventory the player has
-        player_debuffs (list): what debuffs the player has
+        p_dmg (int): what base damage the player has
+        p_in (dict): what inventory the player has
+        p_debuffs (list): what debuffs the player has
+        m_armor (int): monster armor
 
     Returns:
         int: The True value of the player's damage
     """
-    buffs_from_itmes: tuple[int, int, int] = items_to_buffs(p_inventory)
-
-    return 1
+    buffs_from_itmes: list[int] = items_to_buffs(p_in)
+    player_buffs: float = buffs_from_itmes[1] - p_debuffs['damage']
+    player_damage: int = floor(p_dmg * player_buffs * (m_armor/100))
+    return player_damage
 
 
 def combat_fighting_menu(player: Player, monster: Monster):
@@ -77,8 +94,8 @@ def combat_fighting_menu(player: Player, monster: Monster):
     p_lvl: int = player.player_lvl
     p_items: list = get_items_from_inventory(player.player_inventory)
     p_armor: int = player.player_armor
-    p_debuffs: list[int] = player.player_debuff
-    p_trueDamage: int = damage_calculation(p_dmg, p_items, p_debuffs, m_armor)
+    p_debuffs: dict[str, int] = player.player_debuff
+    p_true_dmg: int = damage_calculation(p_dmg, p_items, p_debuffs, m_armor)
 
     print(p_items)
     input()

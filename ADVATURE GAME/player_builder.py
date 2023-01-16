@@ -19,7 +19,6 @@ def player_creater():
         'height': 0,
         'weight': 0
     }
-    print(f'\n\n{list(base_blueprint_avatar.items())} \n\n')
 
     for (key, value) in list(base_blueprint_avatar.items()):
         user_awnser: str = ""

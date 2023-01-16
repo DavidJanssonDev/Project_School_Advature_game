@@ -21,7 +21,7 @@ class Player:
         self.player_damage: int = random.randint(5, 10)
         self.player_lvl: int = 1
         self.player_armor: int = random.randint(1, 3)
-        self.player_debuff: dict[str, int] = {}
+        self.player_debuff: list[tuple[str, int, int]] = []
         self.player_inventory: dict = {
             'item 1': None,
             'item 2': None,
@@ -29,6 +29,7 @@ class Player:
             'item 4': None,
             'item 5': None,
         }
+        self.p_turn = 0
 
         # Player Looks
         self.skin_color: str = player_avatar[1][1]

@@ -9,7 +9,7 @@ from terminal_fixes import clearterminal
 def cave_menu(player: Player) -> None:
     """
 
-    CAVE HUVUD MENU
+    CAVE MAIN MENU
 
     """
 
@@ -35,7 +35,7 @@ TYPE: Cave """)
                     combat_cave_nothing_menu()
                     return
                 case 'monster':
-                    combat_fighting_menu(player)
+                    combat_fighting_menu(player, )
                     return
                 case 'chest':
                     combat_cave_chest_menu(player.player_inventory)
@@ -58,9 +58,12 @@ def cave_randomizing(userawnser: str) -> str:
     cave_choice: str = ""
     user_in_range: bool = userawnser.isnumeric() and (1 <= int(userawnser) <= 3)
 
+    if userawnser.isalpha():
+        if userawnser.lower() == 'back':
+            return 'back'
+
     if user_in_range:
         cave_choice = random.choice(['nothing', 'monster', 'chest', 'trap'])
-
     return cave_choice
 
 # ===========================
@@ -155,6 +158,32 @@ TYPE: Slot [number] or Leave it [leave]  """)
 # ===========================
 
 
-# ===========================
-#       CAVE MENU 3
-# ===========================
+def trap(player: Player) -> None:
+    """
+    Funktion för det som händer när man har hamnat i en fälla.
+
+    Args:
+        player (Player): spelare klass
+    """
+    def tapCalc(type_of_trap: float) -> int:
+        d_buff_time: float = random.randint(1, 2)
+        d_buff: int = (1-(base_effect**curret_turn)) * type_of_trap
+
+    curret_turn: float = float(player.p_turn)
+    player_health: float = float(player.player_hp)
+    player_damage: float = float(player.player_damage)
+    player_armor: float = float(player.player_armor)
+    turn_dbuf_ends: int
+
+    current_d_buffs: list[tuple[str, int, int]] = player.player_debuff
+    base_effect: float = random.randint(5, 10)/100
+
+    match d_buff:
+
+        case 'damage':
+            current_d_buffs.append(('damage', d_buff_time,))
+        case 'damage':
+            pass
+
+        case 'damage':
+            pass

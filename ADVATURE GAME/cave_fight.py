@@ -48,10 +48,19 @@ def items_to_buffs(inventory: list[Item]) -> list[int]:
     return [hp_buff, dmg_buff, armor_buff]
 
 
-def debuffs_to_int(debuffs: dict[str, int]) -> list[int]:
-    p_debuff_dmg: int = 0
-    p_debuff_hp: int = 0
-    p_debuff_armor: int = 0
+def debuffs_to_int(debuffs: dict[str, int]) -> list[float]:
+    """
+    Takes every debuffs out of the player class dictarnary and adds them together
+
+    Args:
+        debuffs (dict[str, int]): _description_
+
+    Returns:
+        list[float]: List of all the types of debuffs
+    """
+    p_debuff_dmg: float = 0
+    p_debuff_hp: float = 0
+    p_debuff_armor: float = 0
     for (name_of_buff, buff) in enumerate(list(debuffs.items())):
         if name_of_buff == 'damage':
             p_debuff_dmg += buff[1]
@@ -62,7 +71,7 @@ def debuffs_to_int(debuffs: dict[str, int]) -> list[int]:
     return [p_debuff_hp, p_debuff_dmg, p_debuff_armor]
 
 
-def damage_calculation(p_dmg: int, p_in: list[Item], p_debuffs: dict[str, int], m_armor: int) -> int:
+def damage_calculation(p_dmg: int, p_in: list[Item], p_debuff: dict[str, int], m_armor: int) -> int:
     """
 
     Calculate all of the damage a player does
@@ -77,7 +86,7 @@ def damage_calculation(p_dmg: int, p_in: list[Item], p_debuffs: dict[str, int], 
         int: The True value of the player's damage
     """
     buffs_from_itmes: list[int] = items_to_buffs(p_in)
-    player_buffs: float = buffs_from_itmes[1] - p_debuffs['damage']
+    player_buffs: float = buffs_from_itmes[1] - p_debuff['damage']
     player_damage: int = floor(p_dmg * player_buffs * (m_armor/100))
     return player_damage
 

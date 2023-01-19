@@ -53,7 +53,7 @@ def combat_fighting_menu(player: Player) -> None:
     monster = Monster(player.p_turn)
     m_armor: int = monster.armor
     m_health: int = monster.health
-    m_name: string = monster.name
+    m_name: str = monster.name
     m_damage: int = monster.damage
 
     p_turn: int = player.p_turn
@@ -109,7 +109,3 @@ def combat_fighting_menu(player: Player) -> None:
                     if are_you_sure.lower() == "yes":
                         player.player_life -= 1
                         return
-
-
-print(p_items)
-input()

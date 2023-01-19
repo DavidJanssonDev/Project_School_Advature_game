@@ -1,9 +1,11 @@
 # Imports
+from math import floor, ceil
 import random
 from combat_inventory import item_place_empty_or_taken, dictunary_to_list
 from cave_fight import combat_fighting_menu
 from game_classes import Player, Item
 from terminal_fixes import clearterminal
+from player_builder import player_creater
 
 
 def cave_menu(player: Player) -> None:
@@ -39,9 +41,14 @@ TYPE: Cave """)
                     return
                 case 'chest':
                     combat_cave_chest_menu(player.player_inventory)
+                    return
                 case 'trap':
-                    print('Trap was here')
-                    input('')
+                    if len(player.player_debuff) == 3:
+                        combat_fighting_menu(player, )
+                        return
+                    else:
+                        print('Trap was here')
+                        input('')
 
 
 def cave_randomizing(userawnser: str) -> str:
@@ -158,32 +165,63 @@ TYPE: Slot [number] or Leave it [leave]  """)
 # ===========================
 
 
+def tap_calc(rund_effect: float, player: Player):
+    """
+
+    Calculates the damage and the turns the debuff effect last
+
+    Returns:
+        int:
+    """
+
+    d_buff: float = 0
+    curret_turn: int = player.p_turn
+
+    d_buff_temp: int = (pow(curret_turn, rund_effect) + 0.5)*10
+    d_buff_str: str = str(d_buff_temp)
+    descimal_int: str = d_buff_str[3]
+
+    if int(descimal_int) >= 5:
+        d_buff: float = ceil(int(d_buff_str)/10)
+
+    elif int(descimal_int) >= 5:
+        d_buff: float = floor(int(d_buff_str)/10)
+
+    print(d_buff_str)
+    input()
+
+
 def trap(player: Player) -> None:
     """
     Funktion för det som händer när man har hamnat i en fälla.
 
+
+    ['vad för debuff', effect,  (start rundda, end rundda)]
+
+
     Args:
         player (Player): spelare klass
     """
-    def tapCalc(type_of_trap: float) -> int:
-        d_buff_time: int = random.randint(1, 2)
-        d_buff: int = (1-(base_effect**curret_turn)) * type_of_trap
+    d_buff_time: int = random.randint(1, 2)
+    random_deffect: str = random.choice(['health', 'damage', 'armor'])
+    rund_effect: float
+    current_d_buffs: list[list] = player.player_debuff
 
-    curret_turn: float = float(player.p_turn)
-    player_health: float = float(player.player_hp)
-    player_damage: float = float(player.player_damage)
-    player_armor: float = float(player.player_armor)
-    turn_dbuf_ends: int
+    match random_deffect:
 
-    current_d_buffs: list[tuple[str, int, int]] = player.player_debuff
-    base_effect: float = random.randint(5, 10)/100
-
-    match d_buff:
-
+        case 'health':
+            rund_effect: float = 1.388
+            tap_calc(rund_effect, player)
+        case 'armor':
+            rund_effect: float = 1.0682
+            tap_calc(rund_effect, player)
         case 'damage':
-            current_d_buffs.append(('damage', d_buff_time,))
-        case 'damage':
-            pass
+            rund_effect: float = 1.6245
+            tap_calc(rund_effect, player)
 
-        case 'damage':
-            pass
+
+if __name__ == '__main__':
+    player = player_creater()
+    player.p_turn = 5
+    print(player.p_turn)
+    tap_calc(1.6245, player)

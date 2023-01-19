@@ -1,9 +1,13 @@
 
+# Modeuler
+from time import sleep
+
 
 # * COMBAT SYSTEM
 from combat_inventory import inventory_main_menu
 from player_showoff import show_avatar_and_stats
 from cave_menu import cave_menu
+
 
 # * FUNKTIONER
 from Menu_user_checker import menu_answer_checker
@@ -46,10 +50,29 @@ TYPE: """)
                 userawnser, menu_options)
             match userawnser:
                 case "start":
-                    combat_main_menu()
+                    menu_options: list = ['again', 'main', 'quite']
+                    while True:
+                        combat_main_menu()
+                        while True:
+                            userawnser: str = ""
+                            while userawnser not in menu_options:
+                                userawnser = input("""
+        =======================================================================
+            1. Do you want to play the game again? (Write:again)
+            2. Do yo want to go to the main menu? (Write:main)
+            3. Do you want to end the game? (Write: quite)
+
+        =======================================================================
+        """)
+
+            userawnser = menu_answer_checker(userawnser, menu_options)
+            match userawnser.lower():
+                case "again":
+                    continue
+                case "main":
                     return
-                case "back":
-                    return
+                case "end game":
+                    quit()
 
 
 def combat_main_menu():
@@ -60,13 +83,6 @@ def combat_main_menu():
     """
 
     player = player_creater()  # Create the player
-
-    if player.p_turn == 10, and p_health > 1:
-        input("""
-           
-      CONGRATULATIONS, YOU HAVE WON THE GAME! 
-      
-        """)
 
     turn = player.p_turn
     menu_options = ["cave", "show", "inventory", "quit"]  # Options
@@ -107,3 +123,15 @@ TYPE: """)
                             return
                         case "no":
                             continue
+
+        if player.p_turn == 11 and player.player_life < 0:
+            clearterminal()
+            print("""
+
+        ======================================================================
+
+                        CONGRATULATIONS, YOU HAVE WON THE GAME! 
+
+        =======================================================================
+            """)
+            sleep(5)

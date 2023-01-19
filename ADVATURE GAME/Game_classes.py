@@ -22,7 +22,7 @@ class Player:
         self.player_life: int = 3
         self.player_hp: int = 10
         self.player_damage: int = random.randint(5, 10)
-        self.player_lvl: int = 1
+        self.player_lvl: int = 0
         self.player_armor: int = random.randint(1, 3)
         self.player_debuff: list[list] = []
         self.player_buff: list[list] = []
@@ -35,9 +35,9 @@ class Player:
         }
         potions = Potions(3)
         self.player_potions: dict[str, int] = {
-            'health regin': potions.damage_boost_potions,
-            'damage regin': potions.health_regen_potions,
-            'armor regin': potions.armor_boost_potions,
+            'health regin': potions.damage_boost_potions_amount,
+            'damage regin': potions.health_regin_potions_amount,
+            'armor regin': potions.armor_boost_potions_amount,
         }
         self.p_turn = 0
 
@@ -56,7 +56,7 @@ class Player:
         table_stats_data = [
             ["Player Stats", ""],
             ["Name", self.name],
-            ["Life", self.player_lift],
+            ["Life", self.player_life],
             ["Level", self.player_lvl],
             ["Health", self.player_hp],
             ["Damage", self.player_damage],
@@ -187,13 +187,11 @@ class Potions:
                 else:
                     print("""
         =====================================================================
-        |     
-        |               YOU ARE OUT OF THAT TYPE OF POTIONS, 
-        |        PLEASE FIGHT YOUR BATTEL OR CHOISE ANOTHER POSINT
-        | 
+        |                                                                   | 
+        |               YOU ARE OUT OF THAT TYPE OF POTIONS,                | 
+        |        PLEASE FIGHT YOUR BATTEL OR CHOISE ANOTHER POSINT          |
+        |                                                                   | 
         =====================================================================
-                          
-                        
                           """)
 
             case 'health_regien':

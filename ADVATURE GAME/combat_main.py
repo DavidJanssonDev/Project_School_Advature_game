@@ -58,8 +58,17 @@ def combat_main_menu():
     MAIN MENU WHEN YOU ARE PLAYING THE GAME
 
     """
+
     player = player_creater()  # Create the player
-    turn = 0
+
+    if player.p_turn == 10, and p_health > 1:
+        input("""
+           
+      CONGRATULATIONS, YOU HAVE WON THE GAME! 
+      
+        """)
+
+    turn = player.p_turn
     menu_options = ["cave", "show", "inventory", "quit"]  # Options
     game_is_runing = True
     while game_is_runing:

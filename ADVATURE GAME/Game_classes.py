@@ -1,6 +1,9 @@
+"""
+    THIS IS THE FILE WHERE EVERY CLASS TAHT IS USED IN THE CODE ARE
+"""
 
-from tabulate import tabulate
 import random
+from tabulate import tabulate
 
 # ============================================================================
 #                              PLAYER
@@ -16,18 +19,25 @@ class Player:
 
         # Player Status
         self.name: str = player_avatar[0][1].title()
-        self.player_lift: int = 3
+        self.player_life: int = 3
         self.player_hp: int = 10
         self.player_damage: int = random.randint(5, 10)
         self.player_lvl: int = 1
         self.player_armor: int = random.randint(1, 3)
-        self.player_debuff: list[tuple[str, int, int]] = []
+        self.player_debuff: list[list] = []
+        self.player_buff: list[list] = []
         self.player_inventory: dict = {
             'item 1': None,
             'item 2': None,
             'item 3': None,
             'item 4': None,
             'item 5': None,
+        }
+        potions = Potions(3)
+        self.player_potions: dict[str, int] = {
+            'health regin': potions.damage_boost_potions,
+            'damage regin': potions.health_regen_potions,
+            'armor regin': potions.armor_boost_potions,
         }
         self.p_turn = 0
 
@@ -143,7 +153,58 @@ def luck_calculation() -> list[float]:
     return stats_boost_porcentage
 
 
-class Item(object):
+class Potions:
+    """
+
+    Potions that the user can use in a cave fight
+
+    """
+
+    def __init__(self, defult_amount: int) -> None:
+        self.damage_boost_potions_amount = defult_amount
+        self.armor_boost_potions_amount = defult_amount
+        self.health_regin_potions_amount = defult_amount
+        self.damage_boost_potions: list = ['damage_boost', 0.1, 2]
+        self.armor_boost_potions: int = 3
+        self.health_regen_potions: int = 3
+
+    def drink_potions(self, type_of_potion: str, player: Player):
+        """
+
+        Adds a buff to the player when driking 
+
+        Args:
+            type_of_potion (str): what postion are the user drinking
+            player (Player): _description_
+        """
+        buff: list = []
+
+        match type_of_potion:
+            case 'damage_boost':
+                if self.damage_boost_potions_amount <= 1:
+                    buff = self.damage_boost_potions
+                    self.damage_boost_potions_amount -= 1
+                else:
+                    print("""
+        =====================================================================
+        |     
+        |               YOU ARE OUT OF THAT TYPE OF POTIONS, 
+        |        PLEASE FIGHT YOUR BATTEL OR CHOISE ANOTHER POSINT
+        | 
+        =====================================================================
+                          
+                        
+                          """)
+
+            case 'health_regien':
+                buff = self.damage_boost_potions
+            case 'armor_boost':
+                buff = self.damage_boost_potions
+
+        player.player_buff.append(buff)
+
+
+class Item:
     """
     item
     """

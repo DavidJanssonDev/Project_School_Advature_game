@@ -2,7 +2,7 @@
 import random
 from combat_inventory import item_place_empty_or_taken, dictunary_to_list
 from cave_fight import combat_fighting_menu
-from Game_classes import Player, Item
+from game_classes import Player, Item
 from terminal_fixes import clearterminal
 
 
@@ -166,7 +166,7 @@ def trap(player: Player) -> None:
         player (Player): spelare klass
     """
     def tapCalc(type_of_trap: float) -> int:
-        d_buff_time: float = random.randint(1, 2)
+        d_buff_time: int = random.randint(1, 2)
         d_buff: int = (1-(base_effect**curret_turn)) * type_of_trap
 
     curret_turn: float = float(player.p_turn)

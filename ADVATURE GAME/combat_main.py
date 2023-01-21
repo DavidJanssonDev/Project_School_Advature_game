@@ -127,7 +127,7 @@ TYPE: """)
                         case "no":
                             continue
 
-        if player.p_turn == 11 and player.player_life < 0:
+        if player.player_lvl == 10 and player.player_life < 0:
             clearterminal()
             print("""
 

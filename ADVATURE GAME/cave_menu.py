@@ -1,6 +1,6 @@
 # Imports
 import random
-from math import floor, ceil
+
 
 # Menu
 from combat_inventory import item_place_empty_or_taken, dictunary_to_list
@@ -177,19 +177,11 @@ def tap_calc(rund_effect: float, curret_turn: int, effect_type: str):
         int:
     """
 
-    d_buff: float = 0
     d_buff_time: int = random.randint(1, 2) + curret_turn
-    d_buff_temp: int = (pow(curret_turn, rund_effect) + 0.5)*10
-    d_buff_str: str = str(d_buff_temp)
-    descimal_int: str = d_buff_str[3]
+    d_buff_temp: int = (pow(curret_turn, rund_effect) + 0.5)/100
+    d_buff: float = round(1-d_buff_temp, 3)
 
-    if int(descimal_int) >= 5:
-        d_buff: float = ceil(int(d_buff_str))/10
-
-    elif int(descimal_int) >= 5:
-        d_buff: float = floor(int(d_buff_str))/10
-
-    return [effect_type, d_buff,  d_buff_time]
+    return [effect_type, d_buff, d_buff_time]
 
 
 def de_buff_check(player: Player) -> None:
@@ -197,7 +189,7 @@ def de_buff_check(player: Player) -> None:
 
     Summery:
 
-        Checks if the user d-buffs has run out 
+        Checks if the user d-buffs has run out
 
     Parameter:
 
@@ -209,6 +201,24 @@ def de_buff_check(player: Player) -> None:
     for index, numberlist in enumerate(debuffs):
         if numberlist[2] == curret_turn:
             debuffs.pop(index)
+
+
+def trap_display(random_deffect: str) -> None:
+    """
+    Display of the trap
+    """
+    input(f"""
+==============================================
+      !!!!            TRAP             !!!
+==============================================
+
+    YOU GOT A TRAP OF TYPE {random_deffect} 
+
+
+==============================================
+            PRESS ENTER TO GET BACK
+==============================================
+  """)
 
 
 def trap(player: Player) -> None:
@@ -242,5 +252,9 @@ def trap(player: Player) -> None:
             effect = tap_calc(rund_effect, current_turn, random_deffect)
 
     current_d_buffs.append(effect)
-    
-    input()
+    trap_display(random_deffect)
+
+
+if __name__ == '__main__':
+    anwser = tap_calc(1.6245, 6, 'health')
+    print(anwser)

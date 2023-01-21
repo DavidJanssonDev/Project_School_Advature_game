@@ -18,13 +18,18 @@ class Player:
     def __init__(self, player_avatar: list[tuple[str, str]]) -> None:
 
         # Player Status
+        self.p_turn = 0
         self.name: str = player_avatar[0][1].title()
+        self.player_lvl: int = 0
+
         self.player_life: int = 3
         self.player_max_hp: int = 10
         self.player_hp: int = 10
+        self.potions = Potions(3)
+
         self.player_damage: int = random.randint(5, 10)
-        self.player_lvl: int = 0
         self.player_armor: int = random.randint(1, 3)
+
         self.player_debuff: list[list] = []
         self.player_buff: list[list] = []
         self.player_inventory: dict = {
@@ -34,13 +39,11 @@ class Player:
             'item 4': None,
             'item 5': None,
         }
-        potions = Potions(3)
         self.player_potions: dict[str, int] = {
-            'health regin': potions.damage_boost_potions_amount,
-            'damage regin': potions.health_regin_potions_amount,
-            'armor regin': potions.armor_boost_potions_amount,
+            'health regin': self.potions.damage_boost_potions_amount,
+            'damage boost': self.potions.health_regin_potions_amount,
+            'armor boost': self.potions.armor_boost_potions_amount,
         }
-        self.p_turn = 0
 
         # Player Looks
         self.skin_color: str = player_avatar[1][1]
@@ -119,61 +122,53 @@ class Monster:
                 self.health: int = 10
                 self.damage: int = random.randint(1, 10)
                 self.armor: int = 0
-                self.missing_luck: float = 0.0
             case 2:
                 self.name: str = "Bob 2.0"
                 self.health: int = 20
                 self.damage: int = random.randint(1, 15)
                 self.armor: int = random.randint(1, 3)
-                self.missing_luck: float = 0.0
             case 3:
                 self.name: str = "Bob 3.0"
                 self.health: int = 30
                 self.damage: int = random.randint(1, 20)
                 self.armor: int = random.randint(1, 4)
-                self.missing_luck: float = 0.0
             case 4:
                 self.name: str = "Bob 4.0"
                 self.health: int = 40
                 self.damage: int = random.randint(1, 30)
                 self.armor: int = random.randint(1, 5)
-                self.missing_luck: float = 0.0
             case 5:
                 self.name: str = "Bob 5.0"
                 self.health: int = 50
                 self.damage: int = random.randint(1, 40)
                 self.armor: int = random.randint(1, 5)
-                self.missing_luck: float = 0.0
             case 6:
                 self.name: str = "Bob 7.0"
                 self.health: int = 60
                 self.damage: int = random.randint(1, 50)
                 self.armor: int = random.randint(1, 5)
-                self.missing_luck: float = 0.0
             case 7:
                 self.name: str = "Bob 8.0"
                 self.health: int = 70
                 self.damage: int = random.randint(1, 60)
                 self.armor: int = random.randint(1, 6)
-                self.missing_luck: float = 0.0
             case 8:
                 self.name: str = "Bob 9.0"
                 self.health: int = 80
                 self.damage: int = random.randint(1, 70)
                 self.armor: int = random.randint(1, 7)
-                self.missing_luck: float = 0.0
+
             case 9:
                 self.name: str = "Bob 10.0"
                 self.health: int = 90
                 self.damage: int = random.randint(1, 80)
                 self.armor: int = random.randint(1, 8)
-                self.missing_luck: float = 0.0
+
             case 10:
                 self.name: str = "FINAL BOB"
                 self.health: int = 1000
                 self.damage: int = random.randint(1, 90)
                 self.armor: int = random.randint(1, 9)
-                self.missing_luck: float = 0.0
 
 
 # ============================================================================
@@ -231,12 +226,12 @@ class Potions:
         effect: float = 0.0
         end_of_buff: int = player.p_turn + 2
         match type_of_potion:
-            case 'damage_boost':
-                effect = 0.1
-            case 'health_regien':
-                effect = 0.1
-            case 'armor_boost':
-                effect = 0.07
+            case 'damage':
+                effect = 1.1
+            case 'health':
+                effect = 1.1
+            case 'armor':
+                effect = 1.07
         player.player_buff.append([type_of_potion, effect, end_of_buff])
 
 
@@ -274,16 +269,16 @@ class Item:
         match self.rarity:
             case "common":
                 number_of_stats = 1
-                effect = random.randrange(0, 10)
+                effect = random.randrange(1, 5)
             case "rare":
                 number_of_stats = 2
-                effect = random.randrange(0, 10)
+                effect = random.randrange(3, 10)
             case "epic":
                 number_of_stats = 3
-                effect = random.randrange(1, 15)
+                effect = random.randrange(5, 15)
             case "legendary":
                 number_of_stats = 4
-                effect = random.randrange(5, 15)
+                effect = random.randrange(7, 20)
 
         damage_boost_luck = luck_calculation()[0]
         health_boost_luck = luck_calculation()[1]

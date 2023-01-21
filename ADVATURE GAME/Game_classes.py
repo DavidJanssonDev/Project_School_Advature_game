@@ -20,6 +20,7 @@ class Player:
         # Player Status
         self.name: str = player_avatar[0][1].title()
         self.player_life: int = 3
+        self.player_max_hp: int = 10
         self.player_hp: int = 10
         self.player_damage: int = random.randint(5, 10)
         self.player_lvl: int = 0
@@ -138,18 +139,23 @@ def luck_calculation() -> list[float]:
     damage_boost_luck: float = 0
     armor_boost_luck: float = 0
     health_boost_luck: float = 0
+    max_health_boost_luck: float = 0
 
     damage_boost_luck = random.random()
     armor_boost_luck = random.random()
     health_boost_luck = random.random()
-    summa = sum([damage_boost_luck, health_boost_luck, armor_boost_luck])
+    max_health_boost_luck = random.random()
+
+    summa = sum([damage_boost_luck, armor_boost_luck,
+                health_boost_luck, max_health_boost_luck])
 
     damage_boost_luck = damage_boost_luck / summa
-    health_boost_luck = health_boost_luck / summa
     armor_boost_luck = armor_boost_luck / summa
+    health_boost_luck = health_boost_luck / summa
+    max_health_boost_luck = max_health_boost_luck / summa
 
-    stats_boost_porcentage = [damage_boost_luck,
-                              health_boost_luck, armor_boost_luck]
+    stats_boost_porcentage = [
+        damage_boost_luck, armor_boost_luck, health_boost_luck, max_health_boost_luck]
     return stats_boost_porcentage
 
 
@@ -164,9 +170,6 @@ class Potions:
         self.damage_boost_potions_amount = defult_amount
         self.armor_boost_potions_amount = defult_amount
         self.health_regin_potions_amount = defult_amount
-        self.damage_boost_potions: list = ['damage_boost', 0.1, 2]
-        self.armor_boost_potions: int = 3
-        self.health_regen_potions: int = 3
 
     def drink_potions(self, type_of_potion: str, player: Player):
         """
@@ -177,29 +180,17 @@ class Potions:
             type_of_potion (str): what postion are the user drinking
             player (Player): _description_
         """
-        buff: list = []
-
+        effect: float = 0.0
+        buffs: list = player.player_buff
+        end_of_buff: int = player.p_turn + 2
         match type_of_potion:
             case 'damage_boost':
-                if self.damage_boost_potions_amount <= 1:
-                    buff = self.damage_boost_potions
-                    self.damage_boost_potions_amount -= 1
-                else:
-                    print("""
-        =====================================================================
-        |                                                                   | 
-        |               YOU ARE OUT OF THAT TYPE OF POTIONS,                | 
-        |        PLEASE FIGHT YOUR BATTEL OR CHOISE ANOTHER POSINT          |
-        |                                                                   | 
-        =====================================================================
-                          """)
-
+                effect = 0.1
             case 'health_regien':
-                buff = self.damage_boost_potions
+                effect = 0.1
             case 'armor_boost':
-                buff = self.damage_boost_potions
-
-        player.player_buff.append(buff)
+                effect = 0.07
+        player.player_buff.append([type_of_potion, effect, end_of_buff])
 
 
 class Item:
@@ -234,14 +225,17 @@ class Item:
         number_of_stats: int = 0
         effect: int = 0
         match self.rarity:
-            case "rare":
+            case "common":
                 number_of_stats = 1
                 effect = random.randrange(0, 10)
-            case "epic":
+            case "rare":
                 number_of_stats = 2
+                effect = random.randrange(0, 10)
+            case "epic":
+                number_of_stats = 3
                 effect = random.randrange(1, 15)
             case "legendary":
-                number_of_stats = 3
+                number_of_stats = 4
                 effect = random.randrange(5, 15)
 
         damage_boost_luck = luck_calculation()[0]

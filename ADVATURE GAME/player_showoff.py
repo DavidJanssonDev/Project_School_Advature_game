@@ -31,11 +31,13 @@ TYPE: """)
                 userawnser, menu_options)
             match userawnser:
                 case "avatar":
-                    display_user_stats(player)
+                    clearterminal()
+                    display_user_avatar(player)
 
                 case "stats":
                     clearterminal()
-                    player.print_player_stats()
+                    display_user_stats(player)
+
                     input("""
 ==============================================
            | PRESS ENTER TO GO BACK |

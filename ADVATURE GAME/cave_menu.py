@@ -5,7 +5,6 @@ from combat_inventory import item_place_empty_or_taken, dictunary_to_list
 from cave_fight import combat_fighting_menu
 from game_classes import Player, Item
 from terminal_fixes import clearterminal
-from player_builder import player_creater
 
 
 def cave_menu(player: Player) -> None:
@@ -165,7 +164,7 @@ TYPE: Slot [number] or Leave it [leave]  """)
 # ===========================
 
 
-def tap_calc(rund_effect: float, player: Player):
+def tap_calc(rund_effect: float, curret_turn: int, effect_type: str):
     """
 
     Calculates the damage and the turns the debuff effect last
@@ -175,20 +174,37 @@ def tap_calc(rund_effect: float, player: Player):
     """
 
     d_buff: float = 0
-    curret_turn: int = player.p_turn
-
+    d_buff_time: int = random.randint(1, 2) + curret_turn
     d_buff_temp: int = (pow(curret_turn, rund_effect) + 0.5)*10
     d_buff_str: str = str(d_buff_temp)
     descimal_int: str = d_buff_str[3]
 
     if int(descimal_int) >= 5:
-        d_buff: float = ceil(int(d_buff_str)/10)
+        d_buff: float = ceil(int(d_buff_str))/10
 
     elif int(descimal_int) >= 5:
-        d_buff: float = floor(int(d_buff_str)/10)
+        d_buff: float = floor(int(d_buff_str))/10
 
-    print(d_buff_str)
-    input()
+    return [effect_type, d_buff,  d_buff_time]
+
+
+def de_buff_check(player: Player) -> None:
+    """
+
+    Summery:
+
+        Checks if the user d-buffs has run out 
+
+    Parameter:
+
+        player (Player): User player
+    """
+    curret_turn: int = player.p_turn
+    debuffs: list[list] = player.player_debuff
+
+    for index, numberlist in enumerate(debuffs):
+        if numberlist[2] == curret_turn:
+            debuffs.pop(index)
 
 
 def trap(player: Player) -> None:
@@ -196,13 +212,14 @@ def trap(player: Player) -> None:
     Funktion för det som händer när man har hamnat i en fälla.
 
 
-    ['vad för debuff', effect,  (start rundda, end rundda)]
+    [['vad för debuff', effect, end rundda], ['vad för debuff', effect, end rundda], ['vad för debuff', effect, end rundda]]
 
 
     Args:
         player (Player): spelare klass
     """
-    d_buff_time: int = random.randint(1, 2)
+    current_turn = player.p_turn
+    effect: list = []
     random_deffect: str = random.choice(['health', 'damage', 'armor'])
     rund_effect: float
     current_d_buffs: list[list] = player.player_debuff
@@ -211,17 +228,13 @@ def trap(player: Player) -> None:
 
         case 'health':
             rund_effect: float = 1.388
-            tap_calc(rund_effect, player)
+            effect = tap_calc(rund_effect, current_turn, random_deffect)
         case 'armor':
             rund_effect: float = 1.0682
-            tap_calc(rund_effect, player)
+            effect = tap_calc(rund_effect, current_turn, random_deffect)
+
         case 'damage':
             rund_effect: float = 1.6245
-            tap_calc(rund_effect, player)
+            effect = tap_calc(rund_effect, current_turn, random_deffect)
 
-
-if __name__ == '__main__':
-    player = player_creater()
-    player.p_turn = 5
-    print(player.p_turn)
-    tap_calc(1.6245, player)
+    current_d_buffs.append(effect)

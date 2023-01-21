@@ -64,15 +64,15 @@ TYPE: """)
 
         =======================================================================
         """)
-
-            userawnser = menu_answer_checker(userawnser, menu_options)
-            match userawnser.lower():
-                case "again":
-                    continue
-                case "main":
-                    return
-                case "end game":
-                    quit()
+                                userawnser = menu_answer_checker(
+                                    userawnser, menu_options)
+                                match userawnser.lower():
+                                    case "again":
+                                        continue
+                                    case "main":
+                                        return
+                                    case "end game":
+                                        quit()
 
 
 def combat_main_menu():
@@ -108,6 +108,7 @@ TYPE: """)
 
                     cave_menu(player)
                     turn += 1
+                    #-----#
 
                 case "show":
                     show_avatar_and_stats(player)
@@ -135,3 +136,4 @@ TYPE: """)
         =======================================================================
             """)
             sleep(5)
+            return

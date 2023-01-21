@@ -1,10 +1,14 @@
 # Imports
-from math import floor, ceil
 import random
+from math import floor, ceil
+
+# Menu
 from combat_inventory import item_place_empty_or_taken, dictunary_to_list
 from cave_fight import combat_fighting_menu
-from game_classes import Player, Item
 from terminal_fixes import clearterminal
+
+# Player and classes
+from game_classes import Player, Item
 
 
 def cave_menu(player: Player) -> None:
@@ -238,3 +242,5 @@ def trap(player: Player) -> None:
             effect = tap_calc(rund_effect, current_turn, random_deffect)
 
     current_d_buffs.append(effect)
+    
+    input()

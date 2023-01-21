@@ -73,6 +73,8 @@ TYPE: """)
                                         return
                                     case "end game":
                                         quit()
+                case "back":
+                    return
 
 
 def combat_main_menu():

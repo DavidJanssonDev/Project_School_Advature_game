@@ -36,21 +36,22 @@ def items_to_buffs(inventory: list[Item]) -> list[int]:
         tuple[int, int, int]: every hp buff from i
     """
 
-    hp_buff = dmg_buff = armor_buff = 0
+    dmg_buff = armor_buff = max_hp_buff = 0
 
     for _, item in enumerate(inventory):
-        hp_buff += item.health_boost
+        max_hp_buff += item.max_hp_boost
         dmg_buff += item.damage_boost
         armor_buff += item.armor_boost
 
-    return [hp_buff, dmg_buff, armor_buff]
+    return [max_hp_buff, dmg_buff, armor_buff]
 
 
 def combat_fighting_menu(player: Player) -> None:
     """
     Player fighting monster Menu:
     """
-    monster = Monster(player.p_turn)
+    monster = Monster(player.player_lvl)
+    monster.stat_change()
     m_armor: int = monster.armor
     m_health: int = monster.health
     m_name: str = monster.name

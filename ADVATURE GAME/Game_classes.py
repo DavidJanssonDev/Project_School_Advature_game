@@ -98,34 +98,82 @@ class Monster:
 
     def __init__(self, moster_level: int) -> None:
         self.moster_level = moster_level
+        self.name: str = ""
+        self.health: int = 0
+        self.damage: int = 0
+        self.armor: int = 0
+        self.missing_luck: float = 0.0
 
-        match moster_level:
+    def stat_change(self) -> None:
+        """
+
+        Generate the stats for the monster
+1-10
+1-15
+10-20
+
+        """
+        match self.moster_level:
             case 1:
                 self.name: str = "Bob"
                 self.health: int = 10
                 self.damage: int = random.randint(1, 10)
                 self.armor: int = 0
+                self.missing_luck: float = 0.0
             case 2:
                 self.name: str = "Bob 2.0"
-                self.health: int = 25
+                self.health: int = 20
                 self.damage: int = random.randint(1, 15)
                 self.armor: int = random.randint(1, 3)
+                self.missing_luck: float = 0.0
             case 3:
-                pass
+                self.name: str = "Bob 3.0"
+                self.health: int = 30
+                self.damage: int = random.randint(1, 20)
+                self.armor: int = random.randint(1, 4)
+                self.missing_luck: float = 0.0
             case 4:
-                pass
+                self.name: str = "Bob 4.0"
+                self.health: int = 40
+                self.damage: int = random.randint(1, 30)
+                self.armor: int = random.randint(1, 5)
+                self.missing_luck: float = 0.0
             case 5:
-                pass
+                self.name: str = "Bob 5.0"
+                self.health: int = 50
+                self.damage: int = random.randint(1, 40)
+                self.armor: int = random.randint(1, 5)
+                self.missing_luck: float = 0.0
             case 6:
-                pass
+                self.name: str = "Bob 7.0"
+                self.health: int = 60
+                self.damage: int = random.randint(1, 50)
+                self.armor: int = random.randint(1, 5)
+                self.missing_luck: float = 0.0
             case 7:
-                pass
+                self.name: str = "Bob 8.0"
+                self.health: int = 70
+                self.damage: int = random.randint(1, 60)
+                self.armor: int = random.randint(1, 6)
+                self.missing_luck: float = 0.0
             case 8:
-                pass
+                self.name: str = "Bob 9.0"
+                self.health: int = 80
+                self.damage: int = random.randint(1, 70)
+                self.armor: int = random.randint(1, 7)
+                self.missing_luck: float = 0.0
             case 9:
-                pass
+                self.name: str = "Bob 10.0"
+                self.health: int = 90
+                self.damage: int = random.randint(1, 80)
+                self.armor: int = random.randint(1, 8)
+                self.missing_luck: float = 0.0
             case 10:
-                pass
+                self.name: str = "FINAL BOB"
+                self.health: int = 1000
+                self.damage: int = random.randint(1, 90)
+                self.armor: int = random.randint(1, 9)
+                self.missing_luck: float = 0.0
 
 
 # ============================================================================
@@ -181,7 +229,6 @@ class Potions:
             player (Player): _description_
         """
         effect: float = 0.0
-        buffs: list = player.player_buff
         end_of_buff: int = player.p_turn + 2
         match type_of_potion:
             case 'damage_boost':
@@ -203,7 +250,7 @@ class Item:
         self.item_name = item_name
 
         self.damage_boost: int = 0
-        self.health_boost: int = 0
+        self.max_hp_boost: int = 0
         self.armor_boost: int = 0
 
     def __str__(self) -> str:
@@ -214,7 +261,7 @@ class Item:
     Effected:
 
         Damage Multiplier : {self.damage_boost}
-        Max Health Boost  : {self.health_boost} %
+        Max Health Boost  : {self.max_hp_boost} %
         Armor Boost       : {self.armor_boost} %
     """
 
@@ -257,15 +304,7 @@ class Item:
                 self.damage_boost += effect
             elif d_user_health_luck > d_user_damage_luck and d_user_health_luck > d_user_armor_luck:
                 print("health")
-                self.health_boost += effect
+                self.max_hp_boost += effect
             elif d_user_armor_luck > d_user_damage_luck and d_user_armor_luck > d_user_health_luck:
                 print("armor")
                 self.armor_boost += effect
-
-
-if __name__ == "__main__":
-    item1 = Item("epic", "hi")
-
-    item1.genatate_stat()
-
-    print(item1)

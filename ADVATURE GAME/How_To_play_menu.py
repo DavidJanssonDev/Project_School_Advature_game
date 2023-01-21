@@ -81,7 +81,7 @@ def display_how_stats_works():
     TELLS THE USER WHAT EVERY STAT DO
 
     """
-    table_Stats_Data = [
+    table_stats_data = [
         ["Player Stats", ""],
         ["Name", "This is the name of your character"],
         ["Life", "This is the amount of Life overall you have and how many times you can die before you lose"],
@@ -95,7 +95,7 @@ def display_how_stats_works():
     print("""
 ==============================================
           """)
-    print(tabulate(table_Stats_Data, headers="firstrow", tablefmt="psql"))
+    print(tabulate(table_stats_data, headers="firstrow", tablefmt="psql"))
     input("""
 ==============================================
            | PRESS ENTER TO GO BACK |

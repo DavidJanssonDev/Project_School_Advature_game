@@ -1,6 +1,7 @@
 
 
 import random
+from time import sleep
 
 from game_classes import Monster, Player, Item
 from terminal_fixes import clearterminal
@@ -10,18 +11,69 @@ from Menu_user_checker import menu_answer_checker
 # Menyer
 
 
-def dict_to_list(dictionary: dict) -> list[int]:
+def dict_to_list(dictionary: dict) -> list[list]:
     """
     dictionary to list
 
     Args:
-        dictionary(dict): dictionary of all the potion amout to the repectiv type 
+        dictionary(dict): dictionary of all the potion amout to the repectiv type
     """
     temp_list: list = []
-    for (item, _) in dictionary.items():
-        temp_list.append(str(item))
+    for (item, amount) in dictionary.items():
+        temp_list.append([str(item), amount])
 
     return temp_list
+
+
+def use_postion(type_of_postion: str, player: Player) -> None:
+    """
+    User drinks there posiions
+    """
+    player.player_potions[type_of_postion] -= 1
+    player.drink_potions(type_of_postion)
+    clearterminal()
+    print(f"""
+     | ====================================================== |
+     |                                                        |
+     |        YOU HAVE JUST DRANK A {type_of_postion} BOOST POSION       |
+     |                                                        |
+     | ====================================================== |
+                              """)
+    sleep(5)
+
+
+def no_postion_menu() -> bool:
+    """
+    IF the user dont have any posions
+    """
+    useranwser: str
+    meanu_options: list[str] = ['postion', 'fight']
+    while True:
+        useranwser: str = ''
+        clearterminal()
+        while useranwser not in meanu_options:
+            useranwser: str = input("""
+     | ====================================================== |
+     |                                                        |
+     |        YOU HAVE NO AMOUNT OF THAT POSTION LEFT         |
+     |                                                        |
+     | ====================================================== |
+     |                                                        |
+     |  OPTIONS:                                              |
+     |                                                        |
+     | 1) GO BACK AND CHOSE A NEW POSION [WRITE: POSTION / 1] |
+     | 2) GO BACK AND BATTLE THE FIGHT   [WRITE: FIGHT   / 2] |
+     |                                                        |
+     |                                                        |
+     | ====================================================== |
+       TYPE: """).lower()
+            you_have_no_posion_awnser = menu_answer_checker(
+                useranwser, meanu_options)
+            match you_have_no_posion_awnser:
+                case "postion":
+                    return True
+                case "fight":
+                    return False
 
 
 def potion_menu(player: Player) -> None:
@@ -32,75 +84,60 @@ def potion_menu(player: Player) -> None:
     Args:
         player_postions (dict[str, int]): player postions
     """
-    menu_options: list[str] = ['damage boost',
-                               'armor boost', 'health regin', 'back']
-    list_of_amout_posions: list[int] = dict_to_list(
+    menu_options: list[str] = ['damage', 'armor', 'health', 'back']
+    list_of_amout_posions: list[list] = dict_to_list(
         player.player_potions)  # health, damage, armor
 
     while True:
+        clearterminal()
         userawnser: str = ""
         while userawnser not in menu_options:
             userawnser = input(f"""
-                               
-           | ===================================================== |                
-           |                       USER ITEM USE                   |
-           | ===================================================== |                
+
+           | ===================================================== |
+           |                     USER ITEM USE                     |
+           | ===================================================== |
            |                                                       |
-           | damage posions amount: {list_of_amout_posions[1]}     |   
-           | armor posions amount:  {list_of_amout_posions[2]}     | 
-           | health posions amount: {list_of_amout_posions[0]}     | 
+           | damage posions amount: {list_of_amout_posions[1][0]}  |
+           | armor posions amount:  {list_of_amout_posions[2][0]}  |
+           | health posions amount: {list_of_amout_posions[0][0]}  |
            |                                                       |
-           |= = = = = = = = = = = = = = = = = = = = = = = = = = = =| 
+           |= = = = = = = = = = = = = = = = = = = = = = = = = = = =|
            |                                                       |
            |     Which posions do you want to choose?              |
-           |                                                       |    
-           |     1. damage boost       > (Write: damage /1)        |
-           |     2. armor boost        > (Write: health /2)        |
-           |     3  health regin       > (Write: health /3)        |
-           |     4. back               > (Write: back   /4)        |      
-           |                                                       |    
-           | ===================================================== |               
-            
+           |                                                       |
+           |     1. Damage boost       > (Write: damage /1)        |
+           |     2. Armor boost        > (Write: armor  /2)        |
+           |     3  Health regin       > (Write: health /3)        |
+           |     4. back               > (Write: back   /4)        |
+           |                                                       |
+           | ===================================================== |
+
             TYPE: """)
             userawnser = menu_answer_checker(userawnser, menu_options)
-            you_have_no_posion_awnser_memu = ['postion', 'fight']
+
             match userawnser:
                 case "damage":
-                    if list_of_amout_posions[1] > 0:
-                        player.player_potions['damage boost'] -= 1
-                        player.potions.drink_potions('damage', player)
-                        return
-                    else:
-
-                        you_have_no_posion_awnser = input("""
-     | ====================================================== |                  
-     |                                                        |
-     |        YOU HAVE NO AMOUNT OF THAT POSTION LEFT         | 
-     |                                                        |
-     | ====================================================== |                  
-     |                                                        |
-     |  OPTIONS:                                              |
-     |                                                        |
-     | 1) GO BACK AND CHOSE A NEW POSION [WRITE: POSTION / 1] |
-     | 2) GO BACK AND BATTLE THE FIGHT   [WRITE: FIGHT   / 2] |
-     |                                                        |
-     |                                                        |
-     | ====================================================== |                  
-       TYPE: """).lower()
-                        you_have_no_posion_awnser = menu_answer_checker(
-                            you_have_no_posion_awnser, you_have_no_posion_awnser_memu)
-                        match you_have_no_posion_awnser:
-                            case "postion":
-                                continue
-                            case "fight":
-                                return
+                    if list_of_amout_posions[0][1] <= 0:
+                        use_postion("damage", player)
+                    if no_postion_menu():
+                        continue
+                    return
 
                 case"armor":
-                    player.player_potions['armor boost'] -= 1
-                    player.potions.drink_potions('armor', player)
+                    if list_of_amout_posions[1][1] <= 0:
+                        use_postion(":armor", player)
+                    if no_postion_menu():
+                        continue
+                    return
+
                 case "health":
-                    player.player_potions['health regin'] -= 1
-                    player.potions.drink_potions('health', player)
+                    if list_of_amout_posions[2][1] <= 0:
+                        use_postion("health", player)
+                    if no_postion_menu():
+                        continue
+                    return
+
                 case "back":
                     return
 
@@ -228,8 +265,8 @@ def do_damage(player: Player, monster: Monster, whos_trun: str):
     player_base_damage = player.player_damage
     monster_base_damage = monster.damage
 
-    monster_armor = monster.armor
-    player_armor = player.player_armor
+    monster_armor = 1-(monster.armor/100)
+    player_armor = 1-(player.player_armor/100)
 
     match whos_trun.lower():
 
@@ -277,7 +314,7 @@ def combat_fighting_menu(player: Player) -> None:
     p_true_dmg: int = damage(player.player_damage, monster.armor)
     m_true_dmg: int = damage(monster.damage, player.player_armor)
 
-    menu_options: list[str] = ['fight', 'use items', 'escape']
+    menu_options: list[str] = ['fight', 'items', 'escape']
     while True:
         userawnser: str = ""
 
@@ -289,11 +326,10 @@ def combat_fighting_menu(player: Player) -> None:
         |                       Fight the MONSTER!                          |
         |                                                   Turn: {p_turn}  |
         |===================================================================|
-        |            Your stats                      Monster stats          |
+        |           {p_name} stats                  {m_name:} stats         |
         |      >>>>>>>>>>>>>>>>>>>>>>>          >>>>>>>>>>>>>>>>>>>>>>>     |
-        |      < Name: {p_name}      >          < Name: {m_name}      >     |
         |      < Level: {p_lvl}      >          < Health: {m_health}  >     |
-        |      < Health: {p_health}  >          < Damage: {m_true_dmg}  >     |
+        |      < Health: {p_health}  >          < Damage: {m_true_dmg}>     |
         |      < Damage: {p_true_dmg}>          < Armour: {m_armor}   >     |
         |      < Armour: {p_armor}   >          <                     >     |
         |      >>>>>>>>>>>>>>>>>>>>>>>          >>>>>>>>>>>>>>>>>>>>>>>     |
@@ -309,14 +345,19 @@ def combat_fighting_menu(player: Player) -> None:
                 case "fight":
                     battel_fight(player, monster)
 
-                case "Use items":
+                case 'items':
                     potion_menu(player)
-                case "Escape":
+                case "escape":
                     are_you_sure: str = input(
                         "Are you sure you want to escape this time then write NO/Yes")
                     if are_you_sure.lower() == "yes":
                         player.player_life -= 1
                         return
+        if monster.health <= 0:
+            return
+        if player.player_hp <= 0:
+            player.player_life -= 1
+            return
 
 
 def battel_fight(player, monster) -> None:

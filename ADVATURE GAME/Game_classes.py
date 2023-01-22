@@ -3,6 +3,7 @@
 """
 
 import random
+
 from tabulate import tabulate
 
 # ============================================================================
@@ -16,7 +17,6 @@ class Player:
     """
 
     def __init__(self, player_avatar: list[tuple[str, str]]) -> None:
-
         # Player Status
         self.p_turn = 0
         self.name: str = player_avatar[0][1].title()
@@ -25,7 +25,6 @@ class Player:
         self.player_life: int = 3
         self.player_max_hp: int = 10
         self.player_hp: int = 10
-        self.potions = Potions(3)
 
         self.player_damage: int = random.randint(5, 10)
         self.player_armor: int = random.randint(1, 3)
@@ -39,10 +38,11 @@ class Player:
             'item 4': None,
             'item 5': None,
         }
+
         self.player_potions: dict[str, int] = {
-            'health regin': self.potions.damage_boost_potions_amount,
-            'damage boost': self.potions.health_regin_potions_amount,
-            'armor boost': self.potions.armor_boost_potions_amount,
+            'health': 3,
+            'damage': 3,
+            'armor': 3,
         }
 
         # Player Looks
@@ -85,6 +85,26 @@ class Player:
         ]
     # FUNCTION FOR PRINTING OUT THE PLAYER LOOKS
         print(tabulate(table_stats_avatar, headers="firstrow", tablefmt="psql"))
+
+    def drink_potions(self, type_of_potion: str):
+        """
+
+        Adds a buff to the player when driking 
+
+        Args:
+            type_of_potion (str): what postion are the user drinking
+            player (Player): _description_
+        """
+        effect: float = 0.0
+        end_of_buff: int = self.p_turn + 2
+        match type_of_potion:
+            case 'damage':
+                effect = 1.1
+            case 'health':
+                effect = 1.1
+            case 'armor':
+                effect = 1.07
+        self.player_buff.append([type_of_potion, effect, end_of_buff])
 
 
 # ============================================================================
@@ -181,58 +201,24 @@ def luck_calculation() -> list[float]:
     """
     damage_boost_luck: float = 0
     armor_boost_luck: float = 0
-    health_boost_luck: float = 0
+
     max_health_boost_luck: float = 0
 
     damage_boost_luck = random.random()
     armor_boost_luck = random.random()
-    health_boost_luck = random.random()
+
     max_health_boost_luck = random.random()
 
-    summa = sum([damage_boost_luck, armor_boost_luck,
-                health_boost_luck, max_health_boost_luck])
+    summa = sum([damage_boost_luck, armor_boost_luck, max_health_boost_luck])
 
     damage_boost_luck = damage_boost_luck / summa
     armor_boost_luck = armor_boost_luck / summa
-    health_boost_luck = health_boost_luck / summa
+
     max_health_boost_luck = max_health_boost_luck / summa
 
     stats_boost_porcentage = [
-        damage_boost_luck, armor_boost_luck, health_boost_luck, max_health_boost_luck]
+        damage_boost_luck, armor_boost_luck, max_health_boost_luck]
     return stats_boost_porcentage
-
-
-class Potions:
-    """
-
-    Potions that the user can use in a cave fight
-
-    """
-
-    def __init__(self, defult_amount: int) -> None:
-        self.damage_boost_potions_amount = defult_amount
-        self.armor_boost_potions_amount = defult_amount
-        self.health_regin_potions_amount = defult_amount
-
-    def drink_potions(self, type_of_potion: str, player: Player):
-        """
-
-        Adds a buff to the player when driking 
-
-        Args:
-            type_of_potion (str): what postion are the user drinking
-            player (Player): _description_
-        """
-        effect: float = 0.0
-        end_of_buff: int = player.p_turn + 2
-        match type_of_potion:
-            case 'damage':
-                effect = 1.1
-            case 'health':
-                effect = 1.1
-            case 'armor':
-                effect = 1.07
-        player.player_buff.append([type_of_potion, effect, end_of_buff])
 
 
 class Item:
@@ -280,9 +266,11 @@ class Item:
                 number_of_stats = 4
                 effect = random.randrange(7, 20)
 
-        damage_boost_luck = luck_calculation()[0]
-        health_boost_luck = luck_calculation()[1]
-        armor_boost_luck = luck_calculation()[2]
+        lucks = luck_calculation()
+
+        damage_boost_luck = lucks[0]
+        health_boost_luck = lucks[1]
+        armor_boost_luck = lucks[2]
 
         user_luck = random.random()
 

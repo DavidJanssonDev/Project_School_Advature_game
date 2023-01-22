@@ -1,6 +1,8 @@
 
 # IMPORTS
 
+from game_classes import Player, Item
+
 from Menu_user_checker import menu_answer_checker
 from terminal_fixes import clearterminal
 
@@ -15,16 +17,19 @@ def print_out_inventory(inventory: dict) -> None:
     """
 
     for (key, value) in inventory.items():
-        print(f'Item {key}:{value}')
+        if isinstance(value, Item):
+            print(f'Item {key}:{value.item_name}')
+        else:
+            print(f'Item {key}:{None}')
 
 
-def inventory_main_menu(inventory: dict) -> None:
+def inventory_main_menu(player: Player) -> None:
     """
     INVENTORY MENU
 
     """
 
-    inventory_menu_options = ['inspect', 'release', 'back']
+    inventory_menu_options = ['inspect', 'back']
 
     while True:
         userawnser = ''
@@ -35,7 +40,7 @@ def inventory_main_menu(inventory: dict) -> None:
                 INVENTORY MENU
 ==============================================
 """)
-            print_out_inventory(inventory)
+            print_out_inventory(player.player_inventory)
             userawnser = input("""
 ==============================================
     1. INSPECT ONE ITEM | TYPE: inspect     /1
@@ -47,7 +52,7 @@ Type:""")
 
             match userawnser:
                 case'inspect':
-                    inventory_inspect(inventory)
+                    inventory_inspect(player.player_inventory)
 
                 case'back':
                     return

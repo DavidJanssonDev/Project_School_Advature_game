@@ -1,4 +1,4 @@
-a = 123456
 
+test = 20
 
-print(str(a)[2])
+print(f'HE {test:>20} ')

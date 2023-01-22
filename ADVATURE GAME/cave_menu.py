@@ -40,7 +40,8 @@ TYPE: Cave """)
                     combat_cave_nothing_menu()
                     return
                 case 'monster':
-                    combat_fighting_menu(player, )
+                    combat_fighting_menu(player)
+
                     return
                 case 'chest':
                     combat_cave_chest_menu(player.player_inventory)
@@ -153,14 +154,19 @@ TYPE: Slot [number] or Leave it [leave]  """)
 
                 case "1":
                     player_inventory["item 1"] = chest_item
+                    return
                 case "2":
                     player_inventory["item 1"] = chest_item
+                    return
                 case "3":
                     player_inventory["item 1"] = chest_item
+                    return
                 case "4":
                     player_inventory["item 1"] = chest_item
+                    return
                 case "5":
                     player_inventory["item 1"] = chest_item
+                    return
                 case 'leave':
                     return
 # ===========================
@@ -253,8 +259,3 @@ def trap(player: Player) -> None:
 
     current_d_buffs.append(effect)
     trap_display(random_deffect)
-
-
-if __name__ == '__main__':
-    anwser = tap_calc(1.6245, 6, 'health')
-    print(anwser)

@@ -109,14 +109,12 @@ TYPE: """)
                 case "cave":
 
                     cave_menu(player)
-                    turn += 1
-                    #-----#
-
+                    player.p_turn += 1
                 case "show":
                     show_avatar_and_stats(player)
 
                 case "inventory":
-                    inventory_main_menu(player.player_inventory)
+                    inventory_main_menu(player)
 
                 case "quit":
                     are_you_sure = input(

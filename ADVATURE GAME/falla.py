@@ -1,6 +1,7 @@
 import random
 
 from game_classes import Player
+from terminal_fixes import clearterminal
 
 
 def tap_calc(rund_effect: float, player: Player, effect_type: str):
@@ -42,6 +43,7 @@ def trap_display(random_deffect: str) -> None:
     """
     Display of the trap
     """
+    clearterminal()
     input(f"""
 ==============================================
       !!!!            TRAP             !!!

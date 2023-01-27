@@ -19,9 +19,10 @@ from terminal_fixes import clearterminal
 
 
 # Menyer
+POTION_MENU_DELAY = 5
 
 
-def dict_to_list(dictionary: dict) -> list[list[tuple[int, str]]]:
+def dict_to_list(dictionary: dict) -> list[list]:
     """
     dictionary to list
 
@@ -46,10 +47,10 @@ def use_postion(type_of_postion: str, player: Player) -> None:
      | ====================================================== |
      |                                                        |
      |        YOU HAVE JUST DRANK A {type_of_postion.upper()} BOOST POSION       |
-     |                                                        |
+     |                     WAIT {POTION_MENU_DELAY} SECOND                      |
      | ====================================================== |
                               """)
-    sleep(5)
+    sleep(POTION_MENU_DELAY)
 
 
 def no_postion_menu() -> bool:
@@ -96,7 +97,7 @@ def potion_menu(player: Player) -> None:
         player_postions (dict[str, int]): player postions
     """
     menu_options: list[str] = ['damage', 'armor', 'health', 'back']
-    list_of_amout_posions: list[list[tuple[int, str]]] = dict_to_list(
+    list_of_amout_posions: list[list] = dict_to_list(
         player.player_potions)  # health, damage, armor
 
     while True:
@@ -129,21 +130,21 @@ def potion_menu(player: Player) -> None:
 
             match userawnser:
                 case "damage":
-                    if list_of_amout_posions[1][1][0] >= 0:
+                    if list_of_amout_posions[1][1] >= 0:
                         use_postion("damage", player)
                         return
                     no_postion_menu()
                     continue
 
                 case"armor":
-                    if list_of_amout_posions[2][1][0] >= 0:
+                    if list_of_amout_posions[2][1] >= 0:
                         use_postion(",armor", player)
                         return
                     no_postion_menu()
                     continue
 
                 case "health":
-                    if list_of_amout_posions[0][1][0] >= 0:
+                    if list_of_amout_posions[0][1] >= 0:
                         use_postion("health", player)
                         return
                     no_postion_menu()
@@ -356,10 +357,10 @@ def combat_fighting_menu(player: Player) -> None:
 |=====================================|
         """)
             DISPLAY_FIGHT_MENU = [
-                [f'PLAYER: {p_name}', '| VS |', f'MONSTER {m_name}'],
-                [f'Level: {p_lvl}', '', f'Level:{m_lvl}'],
-                [f'Health: {p_health}', '', f'Health{m_health}'],
-                [f'Damage: {p_true_dmg}', '', f'Damage{m_true_dmg}'],
+                [f'PLAYER: {p_name}', ' VS ', f'MONSTER {m_name}'],
+                [f'Level: {p_lvl}', '', f'Level: {m_lvl}'],
+                [f'Health: {p_health}', '', f'Health: {m_health}'],
+                [f'Damage: {p_true_dmg}', '', f'Damage: {m_true_dmg}'],
                 [f'Armor: {p_armor}', '', f'Armor: {m_armor}']]
 
             print(tabulate(DISPLAY_FIGHT_MENU, headers="firstrow", tablefmt="psql"))

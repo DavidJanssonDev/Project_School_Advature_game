@@ -13,7 +13,7 @@ def how_to_play_main_menu():
     THIS IS THE MAIN MENU WHEN LOOKING HOW TO PLAY
 
     """
-    menu_options = ["combat", "game play", "stats", "quit"]
+    menu_options = ["game play", "stats", "back"]
     while True:
         userawnser = ""
         while userawnser not in menu_options:
@@ -22,10 +22,9 @@ def how_to_play_main_menu():
 ==============================================
                 HOW TO PLAY MENU
 ==============================================
-  1. COMBAT           | Type: COMBAT
-  2. GAME PLAY        | Type: GAME PLAY
-  3. STATS            | Type: STATS
-  4. QUIT             | Type: QUIT
+  1. GAME PLAY        | Type: GAME PLAY /1
+  2. STATS            | Type: STATS     /2
+  3. BACK             | Type: BACK      /3
 ==============================================
 TYPE: """)
             userawnser = menu_answer_checker(
@@ -33,18 +32,12 @@ TYPE: """)
 
             match userawnser:
 
-                case "combat":
-                    display_how_combat_works()
                 case "game play":
                     display_how_game_play_works()
                 case "stats":
                     display_how_stats_works()
-                case "quit":
+                case "back":
                     return
-
-
-def display_how_combat_works():
-    pass
 
 
 def display_how_game_play_works():

@@ -143,8 +143,8 @@ def print_item_effect(inventory: dict, item: str) -> None:
     """
 
     if inventory[item] is not None:
-        item_effect = inventory[item].effect
-        item_name = inventory[item].name
+        item_effect = inventory[item]
+        item_name = inventory[item].item_name
     else:
         item_effect = None
         item_name = None
@@ -171,8 +171,8 @@ def item_place_empty_or_taken(inventory: dict) -> None:
     Args:
         inventory (dict): Användarens inventory
     """
-    for item in inventory.items():
-        if item[1] is None:
-            print("▢", end="")
+    for (item_index, item) in inventory.items():
+        if item is None:
+            print(f"{item_index} ▢")
         else:
-            print("▣", end="")
+            print(f"{item_index} ▣")

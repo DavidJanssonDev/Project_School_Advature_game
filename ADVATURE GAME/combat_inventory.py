@@ -5,7 +5,7 @@
 """
 # IMPORTS
 
-from game_classes import Player, Item
+from Game_classes import Player, Item
 
 from Menu_user_checker import menu_answer_checker
 from terminal_fixes import clearterminal

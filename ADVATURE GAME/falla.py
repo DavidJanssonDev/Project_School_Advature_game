@@ -1,6 +1,6 @@
 import random
 
-from game_classes import Player
+from Game_classes import Player
 from terminal_fixes import clearterminal
 
 

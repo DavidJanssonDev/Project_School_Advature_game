@@ -13,7 +13,7 @@ from tabulate import tabulate
 
 # Imports form files
 from falla import de_buff_check
-from game_classes import Monster, Player, Item
+from Game_classes import Monster, Player, Item
 from Menu_user_checker import menu_answer_checker
 from terminal_fixes import clearterminal
 

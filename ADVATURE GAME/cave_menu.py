@@ -16,7 +16,7 @@ from falla import trap
 
 
 # Player and classes
-from game_classes import Player, Item
+from Game_classes import Player, Item
 
 
 def cave_menu(player: Player) -> None:

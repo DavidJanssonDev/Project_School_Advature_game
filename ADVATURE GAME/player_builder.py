@@ -5,7 +5,7 @@ FILTE THAT MAKES CREATIES THE PLAYER
 """
 
 from terminal_fixes import clearterminal
-from game_classes import Player
+from Game_classes import Player
 
 
 def player_creater():

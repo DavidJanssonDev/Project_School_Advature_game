@@ -58,6 +58,7 @@ TYPE: Cave """)
                     if len(player.player_debuff) == 3:
                         combat_fighting_menu(player)
                         return
+
                     trap(player)
                 case 'back':
                     return

@@ -33,7 +33,6 @@ def player_creater():
         # CHECKING IF THE VALUE IS NOT THE RIGHT ONE TO THE COROSPORENT TYPE
         if isinstance(value, str):
             while not user_awnser.isalpha() and len(user_awnser) != 5:
-
                 user_awnser = input(
                     f'What {key} does your character have [TYPE ONLY LETTHERS] ? ')
 

@@ -31,7 +31,7 @@ def main():
 
         while userawnser not in menu_options:
             clearterminal()
-            userawnser = input("""
+userawnser = input("""
 ==============================================
                   MAIN MENU
 ==============================================
@@ -40,8 +40,7 @@ def main():
   3. QUIT             | Type: QUIT        /3
 ==============================================
 TYPE: """)
-            userawnser = menu_answer_checker(
-                userawnser, menu_options)
+userawnser = menu_answer_checker(userawnser, menu_options)
             match userawnser:
                 case "game":
                     sure_to_play()
